@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCE Technologies | Automated Statutory Compliance Engine</title>
+    <meta name="description" content="ASCE Technologies builds decision-support software for disaster-recovery and infrastructure-compliance workflows using IBM watsonx.ai and IBM Granite.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0a1628;
+            --navy-light: #111d33;
+            --blue: #1a73e8;
+            --blue-glow: #4d9fff;
+            --gold: #d4a843;
+            --white: #f0f4f8;
+            --gray: #8899aa;
+            --card-bg: rgba(17, 29, 51, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(26, 115, 232, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 168, 67, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(26, 115, 232, 0.05) 0%, transparent 50%);
+            z-index: 0;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 32px 0;
+            border-bottom: 1px solid rgba(136, 153, 170, 0.15);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--blue), var(--blue-glow));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(26, 115, 232, 0.3);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .nav-tag {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 67, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--blue-glow), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 640px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card-bg);
+            border: 1px solid rgba(136, 153, 170, 0.15);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--gray);
+            backdrop-filter: blur(10px);
+        }
+
+        .badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+        }
+
+        .badge.gold { color: var(--gold); border-color: rgba(212, 168, 67, 0.25); }
+
+        /* Cards Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 80px 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(136, 153, 170, 0.12);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(26, 115, 232, 0.3);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(26, 115, 232, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .tech-logos {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        .tech-item .tech-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--card-bg);
+            border: 1px solid rgba(136, 153, 170, 0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: border-color 0.3s;
+        }
+
+        .tech-item:hover .tech-icon {
+            border-color: var(--blue);
+        }
+
+        /* Contact */
+        .contact {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, rgba(26, 115, 232, 0.08), rgba(212, 168, 67, 0.05));
+            border: 1px solid rgba(136, 153, 170, 0.15);
+            border-radius: 20px;
+            padding: 56px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contact-card p {
+            color: var(--gray);
+            margin-bottom: 28px;
+        }
+
+        .contact-card a {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--blue), #1557b0);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-card a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 115, 232, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid rgba(136, 153, 170, 0.1);
+            text-align: center;
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        footer .disclaimer {
+            margin-top: 12px;
+            font-size: 11px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <div class="logo-text">ASCE <span>Technologies</span></div>
+            </div>
+            <div class="nav-tag">IBM Partner</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Automated Statutory<br><span class="highlight">Compliance Engine</span></h1>
+            <p>Decision-support software for disaster-recovery and infrastructure-compliance workflows, powered by IBM watsonx.ai and IBM Granite.</p>
+            <div class="hero-badges">
+                <div class="badge"><span class="dot"></span> IBM watsonx.ai Integrated</div>
+                <div class="badge">IBM Granite Models</div>
+                <div class="badge gold">44 CFR Compliance</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>What ASCE Does</h2>
+                <p>Structured decision support for federal compliance workflows</p>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">⚖️</div>
+                    <h3>Regulatory Analysis</h3>
+                    <p>Produces structured recommendations for disaster-recovery eligibility scenarios under 44 CFR, with validated regulatory references and citation checking.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3>Citation Validation</h3>
+                    <p>Every model-generated statutory reference is checked against a vetted whitelist of approved CFR sections before it reaches a human reviewer.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Human-in-the-Loop</h3>
+                    <p>All outputs are decision-support recommendations requiring trained human review. No automated eligibility determinations or adverse actions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-stack">
+        <div class="container">
+            <div class="section-title">
+                <h2>Built on IBM Cloud</h2>
+                <p>Enterprise foundation for responsible AI deployment</p>
+            </div>
+            <div class="tech-logos">
+                <div class="tech-item">
+                    <div class="tech-icon">🧠</div>
+                    watsonx.ai
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🪨</div>
+                    IBM Granite
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">☁️</div>
+                    IBM Cloud
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🐍</div>
+                    Python
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📋</div>
+                    44 CFR
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <div class="contact-card">
+                <h2>Get in Touch</h2>
+                <p>Interested in ASCE for your compliance workflows? We'd love to connect.</p>
+                <a href="mailto:tbullitt18@gmail.com">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ASCE Technologies. All rights reserved.</p>
+            <p class="disclaimer">ASCE is a decision-support prototype. All recommendations require trained human review before any eligibility decision or adverse action. ASCE is not authorized by, affiliated with, or endorsed by FEMA, DHS, or any government agency.</p>
+        </div>
+    </footer>
+</body>
+</html>
