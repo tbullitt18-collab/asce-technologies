@@ -1,0 +1,5 @@
+{"id":"38df3d7b-dd26-488c-aa6f-7518f4f87fb8","ts":"2026-10-29T08:26:21.387Z","path":"C:\\Users\\tbull\\.gemini\\antigravity\\scratch\\asce-site\\cfr-authority-map.json","version":"1.0.0","taskID":"d130355e-b00e-4c17-a49a-e3b4c4d3cbac"}
+{"id":"76fa4dc9-db2e-4162-a7fc-fe9c7718f845","ts":"2026-10-29T08:26:50.726Z","path":"C:\\Users\\tbull\\.gemini\\antigravity\\scratch\\asce-site\\cfr-validator.js","version":"1.0.0","taskID":"d130355e-b00e-4c17-a49a-e3b4c4d3cbac"}
+{"id":"c318092d-0f27-4abd-af38-84cd0a4bc261","ts":"2026-10-29T08:27:54.212Z","path":"C:\\Users\\tbull\\.gemini\\antigravity\\scratch\\asce-site\\cfr-validator-tests.html","version":"1.0.0","taskID":"d130355e-b00e-4c17-a49a-e3b4c4d3cbac"}
+{"id":"f84d8084-b2d7-4f77-875e-8374d2711e2c","ts":"2026-10-29T08:29:51.599Z","path":"C:\\Users\\tbull\\.gemini\\antigravity\\scratch\\asce-site\\CFR-VALIDATION-REPORT.md","version":"1.0.0","taskID":"d130355e-b00e-4c17-a49a-e3b4c4d3cbac"}
+{"id":"83df3846-c06e-46f0-a677-15b2f736d8a4","ts":"2026-10-29T08:30:25.330Z","path":"C:\\Users\\tbull\\.gemini\\antigravity\\scratch\\asce-site\\run-cfr-tests.js","version":"1.0.0","taskID":"d130355e-b00e-4c17-a49a-e3b4c4d3cbac"}
