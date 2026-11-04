@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Hat Support Matrix & Platform Compatibility — ASCE GOVBEN CaaS</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    .header {
+      background: #0f172a;
+      color: #fff;
+      padding: 32px 24px;
+      border-bottom: 4px solid #ee0000;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .rh-pill {
+      background: #ee0000;
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h1 { margin: 0 0 8px 0; font-size: 26px; }
+    h2 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; font-size: 20px; }
+    h3 { color: #334155; margin-top: 20px; font-size: 16px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13.5px;
+    }
+    th {
+      background: #f1f5f9;
+      color: #334155;
+      text-align: left;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      font-weight: 700;
+    }
+    td {
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+    }
+    tr:nth-child(even) { background: #f8fafc; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .badge-success { background: #dcfce7; color: #166534; }
+    .badge-info { background: #e0f2fe; color: #0369a1; }
+    .badge-eus { background: #fef3c7; color: #92400e; }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      background: #f1f5f9;
+      padding: 16px;
+      border-radius: 6px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .meta-item strong { display: block; color: #475569; font-size: 11.5px; text-transform: uppercase; margin-bottom: 2px; }
+    .btn {
+      display: inline-block;
+      background: #0284c7;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .btn:hover { background: #0369a1; }
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-inner">
+      <div>
+        <div class="logo-badge">
+          <span class="rh-pill">Red Hat Partner Connect</span>
+          <span style="font-size: 12px; color: #94a3b8;">Technology Partner Program (Build Module)</span>
+        </div>
+        <h1 style="margin-top: 10px;">ASCE GOVBEN CaaS v10.0.0</h1>
+        <p style="margin: 0; color: #cbd5e1; font-size: 14px;">Official Red Hat Enterprise Linux (RHEL) &amp; Red Hat OpenShift Support Matrix</p>
+      </div>
+      <div>
+        <a href="https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/" target="_blank" class="btn">Launch Live Decision Gateway &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>1. Product &amp; Partner Certification Details</h2>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <strong>Product Name &amp; Version</strong>
+          ASCE GOVBEN CaaS v10.0.0
+        </div>
+        <div class="meta-item">
+          <strong>Publisher / Vendor</strong>
+          ASCE Technologies LLC
+        </div>
+        <div class="meta-item">
+          <strong>Red Hat Partner Org ID</strong>
+          20792660 (MDM-P002000000044183)
+        </div>
+        <div class="meta-item">
+          <strong>Product ID / Catalog ID</strong>
+          6ae3354d17b7f519e40a0c89 / 6ae487b483fefa429257d504
+        </div>
+        <div class="meta-item">
+          <strong>Container Base Image</strong>
+          Red Hat UBI 9 (python-311:latest)
+        </div>
+        <div class="meta-item">
+          <strong>Preflight 10/10 Status</strong>
+          Passed (Health Index Grade A • 0 CVEs)
+        </div>
+      </div>
+      <p style="font-size: 13.5px; color: #334155; margin-bottom: 0;">
+        ASCE Technologies LLC officially supports <strong>ASCE GOVBEN CaaS</strong> when deployed on certified Red Hat platforms.
+        The container image is built from Red Hat Universal Base Image 9 (UBI 9), runs as non-root user (<code>UID 1001</code>), requires zero disabling of SELinux (100% Enforcing mode), and includes Red Hat license text under <code>/licenses/LICENSE</code>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>2. Red Hat Enterprise Linux (RHEL) Supported Versions</h2>
+      <p style="font-size: 13.5px; color: #475569;">
+        ASCE GOVBEN CaaS is tested, verified, and supported across the following Red Hat Enterprise Linux platforms on <strong>x86_64</strong> (AMD64) and <strong>aarch64</strong> (ARM64) architectures across bare-metal, virtualized (KVM/RHV), and cloud environments:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>RHEL Version</th>
+            <th>Compatibility Tier</th>
+            <th>Architectures</th>
+            <th>Lifecycle Support Status</th>
+            <th>SELinux Mode</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RHEL 10.1</strong></td>
+            <td><span class="badge badge-info">Forward Compatible</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Next-Generation Enterprise Linux Validated</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 10.0</strong></td>
+            <td><span class="badge badge-info">Forward Compatible</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Next-Generation Enterprise Linux Validated</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 9.8</strong></td>
+            <td><span class="badge badge-success">Fully Supported</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Primary Target • Active Support</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 9.6</strong></td>
+            <td><span class="badge badge-eus">Fully Supported (EUS)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Extended Update Support</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 9.5</strong></td>
+            <td><span class="badge badge-success">Fully Supported</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Active Maintenance</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 9.4</strong></td>
+            <td><span class="badge badge-eus">Fully Supported (EUS)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Extended Update Support</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 9.3 / 9.2 / 9.1 / 9.0</strong></td>
+            <td><span class="badge badge-success">Fully Supported</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Maintenance Support</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+          <tr>
+            <td><strong>RHEL 8.10 / 8.8 / 8.6</strong></td>
+            <td><span class="badge badge-eus">Supported</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>Supported via Podman / CRI-O Container Engine</td>
+            <td>Enforcing (Zero Disabling)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 12px 16px; border-radius: 4px; font-size: 13px;">
+        <strong>Image Mode for RHEL Support:</strong> ASCE GOVBEN CaaS supports Image Mode for Red Hat Enterprise Linux using <code>bootc</code> container-based deployment for immutable appliance installations on edge triage units.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. Red Hat OpenShift Container Platform (OCP) Supported Versions</h2>
+      <p style="font-size: 13.5px; color: #475569;">
+        ASCE GOVBEN CaaS is certified and fully supported on the following Red Hat OpenShift releases and managed offerings:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>OpenShift Release</th>
+            <th>Support Tier</th>
+            <th>Supported Architectures</th>
+            <th>Supported Deployment Flavors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>OpenShift 4.20</strong></td>
+            <td><span class="badge badge-info">Compatible</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+          <tr>
+            <td><strong>OpenShift 4.19</strong></td>
+            <td><span class="badge badge-info">Compatible</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+          <tr>
+            <td><strong>OpenShift 4.18</strong></td>
+            <td><span class="badge badge-success">Fully Supported (Certified)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+          <tr>
+            <td><strong>OpenShift 4.17</strong></td>
+            <td><span class="badge badge-success">Fully Supported (Certified)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+          <tr>
+            <td><strong>OpenShift 4.16</strong></td>
+            <td><span class="badge badge-eus">Fully Supported (EUS)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+          <tr>
+            <td><strong>OpenShift 4.14</strong></td>
+            <td><span class="badge badge-eus">Supported (EUS)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+          <tr>
+            <td><strong>OpenShift 4.12</strong></td>
+            <td><span class="badge badge-info">Supported (Maintenance)</span></td>
+            <td><code>x86_64</code>, <code>aarch64</code></td>
+            <td>OCP, ROSA, ARO, ROKS, OpenShift Virtualization</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>4. Enterprise Support Policy &amp; Contacts</h2>
+      <p style="font-size: 13.5px; color: #334155;">
+        ASCE Technologies LLC delivers 24x7 Severity 1 enterprise support for production deployments of ASCE GOVBEN CaaS running on certified Red Hat infrastructure:
+      </p>
+      <ul style="font-size: 13.5px; color: #334155; line-height: 1.8;">
+        <li><strong>Support Email:</strong> <a href="mailto:support@ascetech.org">support@ascetech.org</a> / <a href="mailto:t.bullitt@ascetech.org">t.bullitt@ascetech.org</a></li>
+        <li><strong>Customer Portal:</strong> <a href="https://ascetech.org" target="_blank">https://ascetech.org</a></li>
+        <li><strong>Red Hat Partner Support Ticket:</strong> Reference Partner Org ID <code>20792660</code> at <a href="https://connect.redhat.com/en/support" target="_blank">Red Hat Partner Support</a></li>
+        <li><strong>Documentation Repository:</strong> <a href="https://github.com/tbullitt18-collab/asce-technologies" target="_blank">https://github.com/tbullitt18-collab/asce-technologies</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2026 ASCE Technologies LLC. All rights reserved. Red Hat, Red Hat Enterprise Linux, and OpenShift are trademarks of Red Hat, Inc., registered in the U.S. and other countries.
+  </footer>
+
+</body>
+</html>
