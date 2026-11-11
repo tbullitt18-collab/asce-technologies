@@ -1,435 +1,1014 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASCE Technologies | Automated Statutory Compliance Engine</title>
-    <meta name="description" content="ASCE Technologies builds decision-support software for disaster-recovery and infrastructure-compliance workflows using IBM watsonx.ai and IBM Granite.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASCE Technologies | GovBen Backlog Elimination & Statutory Compliance Engine</title>
+  <style>
+    :root {
+      --asce-primary: #0f62fe;
+      --asce-primary-dark: #0043ce;
+      --asce-dark-bg: #111418;
+      --asce-darker-bg: #0b0d10;
+      --asce-card-bg: #181d24;
+      --asce-card-hover: #1f2530;
+      --asce-text-light: #f4f7fa;
+      --asce-text-muted: #9aa5b4;
+      --asce-accent-green: #24a148;
+      --asce-accent-blue: #4589ff;
+      --asce-accent-cyan: #00d4ff;
+      --asce-redhat-red: #ee0000;
+      --asce-border: #252d3a;
+      --asce-border-active: #0f62fe;
+    }
 
-        :root {
-            --navy: #0a1628;
-            --navy-light: #111d33;
-            --blue: #1a73e8;
-            --blue-glow: #4d9fff;
-            --gold: #d4a843;
-            --white: #f0f4f8;
-            --gray: #8899aa;
-            --card-bg: rgba(17, 29, 51, 0.7);
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--navy);
-            color: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    body, html, .wp-site-blocks, .entry-content {
+      background-color: var(--asce-dark-bg) !important;
+      color: var(--asce-text-light) !important;
+    }
 
-        /* Animated gradient background */
-        .bg-gradient {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(26, 115, 232, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(212, 168, 67, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(26, 115, 232, 0.05) 0%, transparent 50%);
-            z-index: 0;
-            animation: bgShift 20s ease-in-out infinite alternate;
-        }
+    .asce-wrapper {
+      background-color: var(--asce-dark-bg);
+      color: var(--asce-text-light);
+      line-height: 1.6;
+      width: 100vw;
+      max-width: 100vw !important;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw !important;
+      margin-right: -50vw !important;
+      overflow-x: hidden;
+    }
 
-        @keyframes bgShift {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
+    /* NAVIGATION */
+    .asce-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 6%;
+      background: rgba(11, 13, 16, 0.95);
+      border-bottom: 1px solid var(--asce-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+    }
 
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+    .asce-brand {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
 
-        /* Header */
-        header {
-            padding: 32px 0;
-            border-bottom: 1px solid rgba(136, 153, 170, 0.15);
-        }
+    .asce-brand span {
+      color: var(--asce-accent-cyan);
+    }
 
-        .header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    .asce-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      flex-wrap: nowrap;
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .asce-nav-links a {
+      color: var(--asce-text-muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
 
-        .logo-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--blue), var(--blue-glow));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 18px;
-            color: white;
-            box-shadow: 0 4px 20px rgba(26, 115, 232, 0.3);
-        }
+    .asce-nav-links a:hover {
+      color: #fff;
+    }
 
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
+    .asce-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+      border: none;
+    }
 
-        .logo-text span {
-            color: var(--gold);
-        }
+    .asce-btn-primary {
+      background: linear-gradient(135deg, #0f62fe 0%, #0043ce 100%);
+      color: #fff !important;
+      box-shadow: 0 4px 14px rgba(15, 98, 254, 0.35);
+    }
 
-        .nav-tag {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--gold);
-            border: 1px solid rgba(212, 168, 67, 0.3);
-            padding: 4px 12px;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+    .asce-btn-primary:hover {
+      background: linear-gradient(135deg, #0043ce 0%, #002d9c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15, 98, 254, 0.5);
+    }
 
-        /* Hero */
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-        }
+    .asce-btn-outline {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--asce-border);
+      color: var(--asce-text-light) !important;
+    }
 
-        .hero h1 {
-            font-size: clamp(36px, 5vw, 56px);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-        }
+    .asce-btn-outline:hover {
+      border-color: var(--asce-accent-cyan);
+      background: rgba(0, 212, 255, 0.08);
+      transform: translateY(-2px);
+    }
 
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--blue-glow), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .asce-btn-gateway {
+      background: linear-gradient(135deg, #111418 0%, #1f2530 100%);
+      border: 1px solid var(--asce-accent-cyan);
+      color: var(--asce-accent-cyan) !important;
+    }
 
-        .hero p {
-            font-size: 18px;
-            color: var(--gray);
-            max-width: 640px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-        }
+    .asce-btn-gateway:hover {
+      background: var(--asce-accent-cyan);
+      color: #0b0d10 !important;
+      transform: translateY(-2px);
+    }
 
-        .hero-badges {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    /* HERO SECTION */
+    .asce-hero {
+      padding: 5.5rem 6% 3.5rem;
+      text-align: center;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--card-bg);
-            border: 1px solid rgba(136, 153, 170, 0.15);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: var(--gray);
-            backdrop-filter: blur(10px);
-        }
+    .asce-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.15rem;
+      background: rgba(15, 98, 254, 0.12);
+      border: 1px solid rgba(15, 98, 254, 0.45);
+      color: #78a9ff;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.75rem;
+    }
 
-        .badge .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #22c55e;
-            box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-        }
+    .asce-hero h1 {
+      font-size: clamp(2.3rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
 
-        .badge.gold { color: var(--gold); border-color: rgba(212, 168, 67, 0.25); }
+    .asce-hero h1 span {
+      background: linear-gradient(135deg, #00d4ff 0%, #0f62fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        /* Cards Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 48px;
-        }
+    .asce-hero p {
+      font-size: 1.2rem;
+      color: var(--asce-text-muted);
+      max-width: 860px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+      line-height: 1.65;
+    }
 
-        .section-title h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 12px;
-        }
+    .asce-hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
 
-        .section-title p {
-            color: var(--gray);
-            font-size: 16px;
-        }
+    /* TRUST BAR */
+    .asce-trust-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2.25rem;
+      flex-wrap: wrap;
+      padding-top: 2rem;
+      border-top: 1px solid var(--asce-border);
+    }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            padding: 80px 0;
-        }
+    .asce-trust-item {
+      font-size: 0.85rem;
+      color: var(--asce-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(136, 153, 170, 0.12);
-            border-radius: 16px;
-            padding: 32px;
-            backdrop-filter: blur(12px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
+    .asce-trust-item strong {
+      color: #fff;
+    }
 
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(26, 115, 232, 0.3);
-        }
+    /* RED HAT & IBM ECOSYSTEM SHOWCASE */
+    .asce-rh-showcase {
+      background: linear-gradient(135deg, rgba(24, 29, 36, 0.95) 0%, rgba(15, 19, 25, 0.98) 100%);
+      border: 1px solid rgba(238, 0, 0, 0.35);
+      border-radius: 14px;
+      padding: 2.25rem 2.5rem;
+      margin: 2.5rem 0 1rem;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(26, 115, 232, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
+    .asce-rh-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--asce-border);
+    }
 
-        .card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
+    .asce-rh-cred-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .card p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.7;
-        }
+    .asce-rh-cred-pill {
+      background: rgba(238, 0, 0, 0.1);
+      border: 1px solid rgba(238, 0, 0, 0.35);
+      color: #ffb3b3;
+      padding: 0.4rem 0.95rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
 
-        /* Tech Stack */
-        .tech-stack {
-            padding: 60px 0;
-            text-align: center;
-        }
+    /* SECTION BASICS */
+    .asce-section {
+      padding: 5rem 6%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .tech-logos {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 32px;
-        }
+    .asce-section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      text-align: center;
+      color: #fff;
+    }
 
-        .tech-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray);
-            font-size: 13px;
-        }
+    .asce-section-subtitle {
+      font-size: 1.05rem;
+      color: var(--asce-text-muted);
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 3rem;
+    }
 
-        .tech-item .tech-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--card-bg);
-            border: 1px solid rgba(136, 153, 170, 0.15);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            transition: border-color 0.3s;
-        }
+    .asce-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
 
-        .tech-item:hover .tech-icon {
-            border-color: var(--blue);
-        }
+    .asce-card {
+      background: var(--asce-card-bg);
+      border: 1px solid var(--asce-border);
+      border-radius: 10px;
+      padding: 1.85rem;
+      transition: all 0.25s ease;
+    }
 
-        /* Contact */
-        .contact {
-            padding: 80px 0;
-            text-align: center;
-        }
+    .asce-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--asce-primary);
+      background: var(--asce-card-hover);
+    }
 
-        .contact-card {
-            background: linear-gradient(135deg, rgba(26, 115, 232, 0.08), rgba(212, 168, 67, 0.05));
-            border: 1px solid rgba(136, 153, 170, 0.15);
-            border-radius: 20px;
-            padding: 56px 40px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    .asce-card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
 
-        .contact-card h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
+    .asce-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.65rem;
+      color: #fff;
+      font-weight: 700;
+    }
 
-        .contact-card p {
-            color: var(--gray);
-            margin-bottom: 28px;
-        }
+    .asce-card p {
+      color: var(--asce-text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
 
-        .contact-card a {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--blue), #1557b0);
-            color: white;
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 15px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+    /* TRIAGE VISUAL */
+    .asce-triage-container {
+      background: var(--asce-card-bg);
+      border: 1px solid var(--asce-border);
+      border-radius: 14px;
+      padding: 3rem 2.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
 
-        .contact-card a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(26, 115, 232, 0.3);
-        }
+    .asce-triage-flow {
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
 
-        /* Footer */
-        footer {
-            padding: 32px 0;
-            border-top: 1px solid rgba(136, 153, 170, 0.1);
-            text-align: center;
-            color: var(--gray);
-            font-size: 13px;
-        }
+    .asce-triage-box {
+      flex: 1;
+      min-width: 260px;
+      background: var(--asce-darker-bg);
+      border: 1px solid var(--asce-border);
+      border-radius: 10px;
+      padding: 1.75rem 1.5rem;
+      text-align: left;
+    }
 
-        footer .disclaimer {
-            margin-top: 12px;
-            font-size: 11px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0.7;
-        }
-    </style>
+    .asce-triage-box.highlight {
+      border-top: 4px solid var(--asce-accent-green);
+    }
+
+    .asce-triage-box.warning {
+      border-top: 4px solid var(--asce-accent-cyan);
+    }
+
+    .asce-triage-box.danger {
+      border-top: 4px solid #da1e28;
+    }
+
+    .asce-triage-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.75px;
+      margin-bottom: 0.6rem;
+      display: inline-block;
+    }
+
+    .asce-triage-box h4 {
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .asce-triage-box p {
+      color: var(--asce-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* INTERACTIVE ROI CALCULATOR */
+    .asce-calc-wrapper {
+      background: linear-gradient(135deg, rgba(15, 98, 254, 0.08) 0%, rgba(0, 212, 255, 0.04) 100%);
+      border: 1px solid rgba(15, 98, 254, 0.35);
+      border-radius: 14px;
+      padding: 2.75rem;
+      margin: 3.5rem 0;
+    }
+
+    .asce-calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .asce-calc-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .asce-slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .asce-slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .asce-slider-val {
+      color: var(--asce-accent-cyan);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .asce-range {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: var(--asce-border);
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .asce-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--asce-accent-cyan);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .asce-calc-results {
+      background: var(--asce-darker-bg);
+      border: 1px solid var(--asce-border);
+      border-radius: 12px;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .asce-calc-metric {
+      padding: 1rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .asce-metric-label {
+      font-size: 0.8rem;
+      color: var(--asce-text-muted);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .asce-metric-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .asce-metric-val.green {
+      color: #42be65;
+    }
+
+    .asce-metric-val.blue {
+      color: var(--asce-accent-cyan);
+    }
+
+    /* LIVE ENGINE BANNER */
+    .asce-live-banner {
+      background: linear-gradient(135deg, #151a21 0%, #1c232e 100%);
+      border: 1px solid var(--asce-accent-cyan);
+      border-radius: 12px;
+      padding: 2.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+    }
+
+    .asce-live-info h3 {
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .asce-live-pill {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #42be65;
+      box-shadow: 0 0 8px #42be65;
+    }
+
+    .asce-live-info p {
+      color: var(--asce-text-muted);
+      font-size: 0.95rem;
+      max-width: 650px;
+    }
+
+    /* WHO WE SERVE SPLIT */
+    .asce-split-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .asce-split-card {
+      background: var(--asce-card-bg);
+      border: 1px solid var(--asce-border);
+      border-radius: 12px;
+      padding: 2.5rem;
+    }
+
+    .asce-split-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .asce-split-card ul {
+      list-style: none;
+      margin-top: 1.25rem;
+    }
+
+    .asce-split-card li {
+      margin-bottom: 0.85rem;
+      color: var(--asce-text-muted);
+      font-size: 0.92rem;
+      display: flex;
+      gap: 0.65rem;
+      line-height: 1.5;
+    }
+
+    .asce-split-card li strong {
+      color: #fff;
+    }
+
+    /* CONTACT SECTION */
+    .asce-contact-box {
+      text-align: center;
+      background: var(--asce-darker-bg);
+      border-radius: 14px;
+      border: 1px solid var(--asce-border);
+      padding: 4.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .asce-contact-box h2 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .asce-contact-box p {
+      color: var(--asce-text-muted);
+      max-width: 620px;
+      margin: 0 auto 2.25rem;
+      font-size: 1.05rem;
+    }
+
+    /* FOOTER */
+    .asce-footer {
+      background: #07080a;
+      border-top: 1px solid var(--asce-border);
+      padding: 4rem 6% 2.5rem;
+      font-size: 0.9rem;
+      color: var(--asce-text-muted);
+    }
+
+    .asce-footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+    }
+
+    .asce-footer-bottom {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 768px) {
+      .asce-calc-results {
+        grid-template-columns: 1fr;
+      }
+      .asce-nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
-<body>
-    <div class="bg-gradient"></div>
+<body class="asce-wrapper">
+<div class="asce-wrapper">
 
-    <header>
-        <div class="container header-inner">
-            <div class="logo">
-                <div class="logo-icon">A</div>
-                <div class="logo-text">ASCE <span>Technologies</span></div>
-            </div>
-            <div class="nav-tag">IBM Partner</div>
-        </div>
-    </header>
+  <!-- NAVIGATION -->
+  <nav class="asce-nav">
+    <a href="#" class="asce-brand">ASCE<span>Technologies</span></a>
+    <div class="asce-nav-links">
+      <a href="#problem">The Backlog Problem</a>
+      <a href="#walkthrough">Walkthrough Video</a>
+      <a href="#solution">How ASCE Solves It</a>
+      <a href="#calculator">ROI Calculator</a>
+      <a href="#capabilities">Architecture</a>
+      <a href="#partners">For Prime Contractors</a>
+      <a href="https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/" target="_blank" class="asce-btn asce-btn-gateway">Live Gateway ↗</a>
+      <a href="#contact" class="asce-btn asce-btn-primary">Schedule Assessment</a>
+    </div>
+  </nav>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Automated Statutory<br><span class="highlight">Compliance Engine</span></h1>
-            <p>Decision-support software for disaster-recovery and infrastructure-compliance workflows, powered by IBM watsonx.ai and IBM Granite.</p>
-            <div class="hero-badges">
-                <div class="badge"><span class="dot"></span> IBM watsonx.ai Integrated</div>
-                <div class="badge">IBM Granite Models</div>
-                <div class="badge gold">44 CFR Compliance</div>
-            </div>
-        </div>
-    </section>
+  <!-- HERO SECTION -->
+  <header class="asce-hero">
+    <div class="asce-badge-pill">
+      🛡️ 100% Deterministic GovBen Compliance • Whitelisted Statutory Rules
+    </div>
+    <h1>Eliminate Casework Backlogs <span>With Deterministic Statutory Guardrails.</span></h1>
+    <p>
+      The Automated Statutory Compliance Engine (ASCE) acts as an intelligent clearinghouse for federal and state benefits programs—triaging inherited backlogs, stopping redundant document freezes, and safeguarding statutory deadlines under 44 CFR, 42 CFR, and 7 CFR.
+    </p>
+    <div class="asce-hero-buttons">
+      <a href="#contact" class="asce-btn asce-btn-primary" style="font-size: 1rem; padding: 0.9rem 2rem;">Schedule Backlog Assessment</a>
+      <a href="#walkthrough" class="asce-btn asce-btn-gateway" style="font-size: 1rem; padding: 0.9rem 2rem;">
+        🎬 Watch 2.5-Min System Walkthrough
+      </a>
+      <a href="https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/" target="_blank" class="asce-btn asce-btn-outline" style="font-size: 1rem; padding: 0.9rem 1.75rem;">
+        ⚡ Launch Live Gateway ↗
+      </a>
+    </div>
 
-    <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>What ASCE Does</h2>
-                <p>Structured decision support for federal compliance workflows</p>
-            </div>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">⚖️</div>
-                    <h3>Regulatory Analysis</h3>
-                    <p>Produces structured recommendations for disaster-recovery eligibility scenarios under 44 CFR, with validated regulatory references and citation checking.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔍</div>
-                    <h3>Citation Validation</h3>
-                    <p>Every model-generated statutory reference is checked against a vetted whitelist of approved CFR sections before it reaches a human reviewer.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🛡️</div>
-                    <h3>Human-in-the-Loop</h3>
-                    <p>All outputs are decision-support recommendations requiring trained human review. No automated eligibility determinations or adverse actions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- TRUST BAR -->
+    <div class="asce-trust-bar">
+      <div class="asce-trust-item">
+        <img src="data:image/png;base64,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" alt="IBM" style="height: 18px; vertical-align: middle; filter: invert(1); margin-right: 4px;"> 
+        <strong>Official IBM Business Partner</strong> (Reseller &amp; Build)
+      </div>
+      <div class="asce-trust-item">
+        <span style="font-size: 16px; margin-right: 4px;">🏛️</span>
+        <strong>TD SYNNEX Public Sector</strong> (GSA MAS 70 • SEWP V • DoD ESI)
+      </div>
+      <div class="asce-trust-item">
+        <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MTMgMTQ1Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2UwMDt9LmNscy0ye2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPlJlZEhhdC1Mb2dvLUEtUmV2ZXJzZTwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTI3LjQ3LDgzLjQ5YzEyLjUxLDAsMzAuNjEtMi41OCwzMC42MS0xNy40NmExNCwxNCwwLDAsMC0uMzEtMy40MmwtNy40NS0zMi4zNmMtMS43Mi03LjEyLTMuMjMtMTAuMzUtMTUuNzMtMTYuNkMxMjQuODksOC42OSwxMDMuNzYuNSw5Ny41MS41LDkxLjY5LjUsOTAsOCw4My4wNiw4Yy02LjY4LDAtMTEuNjQtNS42LTE3Ljg5LTUuNi02LDAtOS45MSw0LjA5LTEyLjkzLDEyLjUsMCwwLTguNDEsMjMuNzItOS40OSwyNy4xNkE2LjQzLDYuNDMsMCwwLDAsNDIuNTMsNDRjMCw5LjIyLDM2LjMsMzkuNDUsODQuOTQsMzkuNDVNMTYwLDcyLjA3YzEuNzMsOC4xOSwxLjczLDkuMDUsMS43MywxMC4xMywwLDE0LTE1Ljc0LDIxLjc3LTM2LjQzLDIxLjc3Qzc4LjU0LDEwNCwzNy41OCw3Ni42LDM3LjU4LDU4LjQ5YTE4LjQ1LDE4LjQ1LDAsMCwxLDEuNTEtNy4zM0MyMi4yNyw1MiwuNSw1NSwuNSw3NC4yMmMwLDMxLjQ4LDc0LjU5LDcwLjI4LDEzMy42NSw3MC4yOCw0NS4yOCwwLDU2LjctMjAuNDgsNTYuNy0zNi42NSwwLTEyLjcyLTExLTI3LjE2LTMwLjgzLTM1Ljc4Ii8+PHBhdGggZD0iTTE2MCw3Mi4wN2MxLjczLDguMTksMS43Myw5LjA1LDEuNzMsMTAuMTMsMCwxNC0xNS43NCwyMS43Ny0zNi40MywyMS43N0M3OC41NCwxMDQsMzcuNTgsNzYuNiwzNy41OCw1OC40OWExOC40NSwxOC40NSwwLDAsMSwxLjUxLTcuMzNsMy42Ni05LjA2QTYuNDMsNi40MywwLDAsMCw0Mi41Myw0NGMwLDkuMjIsMzYuMywzOS40NSw4NC45NCwzOS40NSwxMi41MSwwLDMwLjYxLTIuNTgsMzAuNjEtMTcuNDZhMTQsMTQsMCwwLDAtLjMxLTMuNDJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNTc5Ljc0LDkyLjhjMCwxMS44OSw3LjE1LDE3LjY3LDIwLjE5LDE3LjY3YTUyLjExLDUyLjExLDAsMCwwLDExLjg5LTEuNjhWOTVhMjQuODQsMjQuODQsMCwwLDEtNy42OCwxLjE2Yy01LjM3LDAtNy4zNi0xLjY4LTcuMzYtNi43M1Y2OC4zaDE1LjU2VjU0LjFINTk2Ljc4di0xOGwtMTcsMy42OFY1NC4xSDU2OC40OVY2OC4zaDExLjI1Wm0tNTMsLjMyYzAtMy42OCwzLjY5LTUuNDcsOS4yNi01LjQ3YTQzLjEyLDQzLjEyLDAsMCwxLDEwLjEsMS4yNnY3LjE1YTIxLjUxLDIxLjUxLDAsMCwxLTEwLjYzLDIuNjNjLTUuNDYsMC04LjczLTIuMS04LjczLTUuNTdtNS4yLDE3LjU2YzYsMCwxMC44NC0xLjI2LDE1LjM2LTQuMzF2My4zN2gxNi44MlY3NC4wOGMwLTEzLjU2LTkuMTQtMjEtMjQuMzktMjEtOC41MiwwLTE2Ljk0LDItMjYsNi4xbDYuMSwxMi41MmM2LjUyLTIuNzQsMTItNC40MiwxNi44My00LjQyLDcsMCwxMC42MiwyLjczLDEwLjYyLDguMzF2Mi43M2E0OS41Myw0OS41MywwLDAsMC0xMi42Mi0xLjU4Yy0xNC4zMSwwLTIyLjkzLDYtMjIuOTMsMTYuNzMsMCw5Ljc4LDcuNzgsMTcuMjQsMjAuMTksMTcuMjRtLTkyLjQ0LS45NGgxOC4wOVY4MC45MmgzMC4yOXYyOC44Mkg1MDZWMzYuMTJINDg3LjkzVjY0LjQxSDQ1Ny42NFYzNi4xMkg0MzkuNTVaTTM3MC42Miw4MS44N2MwLTgsNi4zMS0xNC4xLDE0LjYyLTE0LjFBMTcuMjIsMTcuMjIsMCwwLDEsMzk3LDcyLjA5VjkxLjU0QTE2LjM2LDE2LjM2LDAsMCwxLDM4NS4yNCw5NmMtOC4yLDAtMTQuNjItNi4xLTE0LjYyLTE0LjA5bTI2LjYxLDI3Ljg3aDE2LjgzVjMyLjQ0bC0xNywzLjY4VjU3LjA1YTI4LjMsMjguMywwLDAsMC0xNC4yLTMuNjhjLTE2LjE5LDAtMjguOTIsMTIuNTEtMjguOTIsMjguNWEyOC4yNSwyOC4yNSwwLDAsMCwyOC40LDI4LjYsMjUuMTIsMjUuMTIsMCwwLDAsMTQuOTMtNC44M1pNMzIwLDY3YzUuMzYsMCw5Ljg4LDMuNDcsMTEuNjcsOC44M0gzMDguNDdDMzEwLjE1LDcwLjMsMzE0LjM2LDY3LDMyMCw2N00yOTEuMzMsODJjMCwxNi4yLDEzLjI1LDI4LjgyLDMwLjI4LDI4LjgyLDkuMzYsMCwxNi4yLTIuNTMsMjMuMjUtOC40MmwtMTEuMjYtMTBjLTIuNjMsMi43NC02LjUyLDQuMjEtMTEuMTQsNC4yMWExNC4zOSwxNC4zOSwwLDAsMS0xMy42OC04LjgzaDM5LjY1VjgzLjU1YzAtMTcuNjctMTEuODgtMzAuMzktMjguMDgtMzAuMzlhMjguNTcsMjguNTcsMCwwLDAtMjksMjguODFNMjYyLDUxLjU4YzYsMCw5LjM2LDMuNzgsOS4zNiw4LjMxUzI2OCw2OC4yLDI2Miw2OC4ySDI0NC4xMVY1MS41OFptLTM2LDU4LjE2aDE4LjA5VjgyLjkyaDEzLjc3bDEzLjg5LDI2LjgySDI5MmwtMTYuMi0yOS40NWEyMi4yNywyMi4yNywwLDAsMCwxMy44OC0yMC43MmMwLTEzLjI1LTEwLjQxLTIzLjQ1LTI2LTIzLjQ1SDIyNloiLz48L3N2Zz4=" alt="Red Hat" style="height: 22px; vertical-align: middle; margin-right: 4px;">
+        <strong>Red Hat Preflight Validated</strong> (UBI 9 • 11/11 Pass)
+      </div>
+      <div class="asce-trust-item">
+        <span>📜</span> <strong>Provisional Patent Filed</strong> (Alice 101 Gate)
+      </div>
+      <div class="asce-trust-item">
+        <span>⚡</span> <strong>10,000+ Records/Hr</strong> Batch Throughput
+      </div>
+    </div>
+  </header>
 
-    <section class="tech-stack">
-        <div class="container">
-            <div class="section-title">
-                <h2>Built on IBM Cloud</h2>
-                <p>Enterprise foundation for responsible AI deployment</p>
-            </div>
-            <div class="tech-logos">
-                <div class="tech-item">
-                    <div class="tech-icon">🧠</div>
-                    watsonx.ai
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">🪨</div>
-                    IBM Granite
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">☁️</div>
-                    IBM Cloud
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">🐍</div>
-                    Python
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">📋</div>
-                    44 CFR
-                </div>
-            </div>
+  <!-- VERIFIED RED HAT PARTNER & IBM ECOSYSTEM BANNER -->
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 6%;">
+    <div class="asce-rh-showcase">
+      <div class="asce-rh-header">
+        <div>
+          <div style="display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIzIiBoZWlnaHQ9IjI5IiB2aWV3Qm94PSIwIDAgMjIzIDI5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNTYuMjQzMiAxOC45NjAyVjkuMDEyOTRINjAuNzYyMUM2MS4yNzM3IDkuMDEyOTQgNjEuNzM1NSA5LjA4OTMyIDYyLjE0NzYgOS4yNDAzMUM2Mi41NTk3IDkuMzkxMjkgNjIuOTA3OSA5LjU5NzM0IDYzLjE5MjEgOS44NTg0NkM2My40NzYzIDEwLjExOTYgNjMuNjk0OCAxMC40Mjg3IDYzLjg0NTcgMTAuNzg5MkM2My45OTY3IDExLjE0OTggNjQuMDczMSAxMS41MzcxIDY0LjA3MzEgMTEuOTU0NUM2NC4wNzMxIDEyLjU5OTMgNjMuODg4NCAxMy4xNjI0IDYzLjUxODkgMTMuNjQ1NUM2My4xNDk0IDE0LjEyODcgNjIuNjUyMSAxNC40NzUxIDYyLjAyNjggMTQuNjgyOUw2NC4yNDM2IDE4Ljk2MDJINjIuNTk1Mkw2MC41MzQ3IDE0Ljg4MThINTcuNzM1M1YxOC45NjAySDU2LjI0MzJaTTYwLjYzNDIgMTAuMzIwM0g1Ny43MzUzVjEzLjY0NTVINjAuNjM0MkM2MS4yNTk0IDEzLjY0NTUgNjEuNzM3MyAxMy40ODM5IDYyLjA2OTQgMTMuMTYyNEM2Mi40MDE2IDEyLjg0MDkgNjIuNTY2OCAxMi40NDY1IDYyLjU2NjggMTEuOTgyOUM2Mi41NjY4IDExLjUxOTMgNjIuNDAxNiAxMS4xMjUgNjIuMDY5NCAxMC44MDM1QzYxLjczNzMgMTAuNDgwMiA2MS4yNTk0IDEwLjMyMDMgNjAuNjM0MiAxMC4zMjAzWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTY0LjY2OTkgMTUuMzM2NkM2NC42Njk5IDE0LjgyNSA2NC43NjIzIDE0LjM0MTkgNjQuOTQ3IDEzLjg4NzFDNjUuMTMxOCAxMy40MzI0IDY1LjM4NzUgMTMuMDM2MyA2NS43MTQ0IDEyLjcwMDZDNjYuMDQxMiAxMi4zNjQ4IDY2LjQyNDkgMTIuMDk4NCA2Ni44NjU0IDExLjkwNDhDNjcuMzA2IDExLjcxMTIgNjcuNzgyIDExLjYxMzUgNjguMjkzNiAxMS42MTM1QzY4Ljc4NTYgMTEuNjEzNSA2OS4yNDc1IDExLjcxMTIgNjkuNjc5MSAxMS45MDQ4QzcwLjExMDcgMTIuMDk4NCA3MC40ODAyIDEyLjM2NDggNzAuNzg3NSAxMi43MDA2QzcxLjA5NDggMTMuMDM2MyA3MS4zMzk5IDEzLjQzNzcgNzEuNTE5NCAxMy45MDEzQzcxLjY5ODggMTQuMzY1IDcxLjc4OTMgMTQuODYyMyA3MS43ODkzIDE1LjM5MzRWMTUuODA1NUg2Ni4wNzY4QzY2LjE3MDkgMTYuNDAyNCA2Ni40NDYyIDE2Ljg5OCA2Ni45MDEgMTcuMjkwNUM2Ny4zNTU3IDE3LjY4MzEgNjcuODk1NyAxNy44ODAzIDY4LjUyMDkgMTcuODgwM0M2OC44NzA5IDE3Ljg4MDMgNjkuMjA4NCAxNy44MjM0IDY5LjUyOTkgMTcuNzA5N0M2OS44NTE0IDE3LjU5NjEgNzAuMTI2NyAxNy40Mzk3IDcwLjM1NDEgMTcuMjQwOEw3MS4yNjM2IDE4LjEzNjFDNzAuODM3MiAxOC40NjgyIDcwLjM5ODUgMTguNzA5OCA2OS45NDkxIDE4Ljg2MDhDNjkuNDk5NyAxOS4wMTE4IDY5LjAwNDEgMTkuMDg4MiA2OC40NjQxIDE5LjA4ODJDNjcuOTMzIDE5LjA4ODIgNjcuNDM1NiAxOC45OTA1IDY2Ljk3MiAxOC43OTY4QzY2LjUwODQgMTguNjAzMiA2Ni4xMDUyIDE4LjM0MDMgNjUuNzY0MSAxOC4wMDgyQzY1LjQyMzEgMTcuNjc2IDY1LjE1NDkgMTcuMjgxNyA2NC45NjEyIDE2LjgyMTZDNjQuNzY1OCAxNi4zNjE1IDY0LjY2OTkgMTUuODY1OSA2NC42Njk5IDE1LjMzNjZaTTY4LjI2NTIgMTIuODA3MUM2Ny43MTYzIDEyLjgwNzEgNjcuMjQyIDEyLjk4NjUgNjYuODQ0MSAxMy4zNDcxQzY2LjQ0NjIgMTMuNzA3NyA2Ni4xOTU4IDE0LjE3MTMgNjYuMDkxIDE0LjczOThINzAuMzgyNUM3MC4yODg0IDE0LjE5MDkgNzAuMDQxNSAxMy43MzA4IDY5LjY0MzYgMTMuMzYxM0M2OS4yNDU3IDEyLjk5MTkgNjguNzg1NiAxMi44MDcxIDY4LjI2NTIgMTIuODA3MVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik03OC43MDk3IDE4Ljk2MDJWMTguMjc4MUM3OC40MDYgMTguNTMzOSA3OC4wNjQ5IDE4LjczMTEgNzcuNjg2NiAxOC44Njc5Qzc3LjMwODIgMTkuMDA0NyA3Ni45MTAzIDE5LjA3MzkgNzYuNDkyOSAxOS4wNzM5Qzc1Ljk4MTMgMTkuMDczOSA3NS41MDM1IDE4Ljk3NjIgNzUuMDU3NiAxOC43ODI2Qzc0LjYxMTggMTguNTg5IDc0LjIyNjMgMTguMzIyNiA3My44OTk1IDE3Ljk4NjhDNzMuNTcyNyAxNy42NTExIDczLjMxNTEgMTcuMjUzMiA3My4xMjUgMTYuNzkzMkM3Mi45MzUgMTYuMzMzMSA3Mi44NDA4IDE1Ljg0ODIgNzIuODQwOCAxNS4zMzY2QzcyLjg0MDggMTQuODI1IDcyLjkzNSAxNC4zNDE5IDczLjEyNSAxMy44ODcxQzczLjMxNTEgMTMuNDMyNCA3My41NzI3IDEzLjAzNjMgNzMuODk5NSAxMi43MDA2Qzc0LjIyNjMgMTIuMzY0OCA3NC42MTUzIDEyLjA5ODQgNzUuMDY0OCAxMS45MDQ4Qzc1LjUxNDIgMTEuNzExMiA3Ni4wMDA5IDExLjYxMzUgNzYuNTIxMyAxMS42MTM1Qzc2LjkyODEgMTEuNjEzNSA3Ny4zMTcxIDExLjY3NTYgNzcuNjg2NiAxMS43OTgyQzc4LjA1NiAxMS45MjA4IDc4LjM5MTggMTIuMDk2NiA3OC42OTU1IDEyLjMyNFY5LjAxMjk1TDgwLjExNjYgOC43MDAzMlYxOC45NjAySDc4LjcwOTdaTTc0LjIzMzQgMTUuMzIyNEM3NC4yMzM0IDE2LjAzMjkgNzQuNDczMiAxNi42Mjk3IDc0Ljk1MTEgMTcuMTEyOUM3NS40Mjg5IDE3LjU5NiA3Ni4wMDk3IDE3LjgzNzYgNzYuNjkxOCAxNy44Mzc2Qzc3LjEwOTMgMTcuODM3NiA3Ny40ODc2IDE3Ljc1OTUgNzcuODI4NyAxNy42MDMyQzc4LjE2OTcgMTcuNDQ2OCA3OC40NTkzIDE3LjIzNTUgNzguNjk1NSAxNi45NzA4VjEzLjY4ODJDNzguNDY4MiAxMy40MzI0IDc4LjE3ODYgMTMuMjI2MyA3Ny44Mjg3IDEzLjA3Qzc3LjQ3ODcgMTIuOTEzNyA3Ny4wOTg2IDEyLjgzNTYgNzYuNjkxOCAxMi44MzU2Qzc1Ljk5MDIgMTIuODM1NiA3NS40MDU4IDEzLjA3NTQgNzQuOTM2OSAxMy41NTMyQzc0LjQ2NzkgMTQuMDMxIDc0LjIzMzQgMTQuNjIwNyA3NC4yMzM0IDE1LjMyMjRaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNODQuOTE4IDE4Ljk2MDJWOS4wMTI5NEg4Ni40MTAxVjEzLjI3NjFIOTEuNjk2M1Y5LjAxMjk0SDkzLjE4ODRWMTguOTYwMkg5MS42OTYzVjE0LjYyNjFIODYuNDEwMVYxOC45NjAySDg0LjkxOFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik05Ny4xOTU5IDE5LjA4ODFDOTYuNDA5IDE5LjA4ODEgOTUuNzY5NiAxOC44ODIxIDk1LjI3NzUgMTguNDdDOTQuNzg1NSAxOC4wNTc5IDk0LjUzODYgMTcuNTMwMyA5NC41Mzg2IDE2Ljg4NTVDOTQuNTM4NiAxNi4xNjYxIDk0LjgxNTcgMTUuNjE5IDk1LjM2OTkgMTUuMjQ0MkM5NS45MjQxIDE0Ljg2OTQgOTYuNjIyMiAxNC42ODI5IDk3LjQ2NTkgMTQuNjgyOUM5Ny44MTU5IDE0LjY4MjkgOTguMTYwNSAxNC43MTg0IDk4LjQ5NjIgMTQuNzg5NUM5OC44MzE5IDE0Ljg2MDUgOTkuMTQ4MSAxNC45NTgyIDk5LjQ0MTIgMTUuMDgwOFYxNC4zMTM0Qzk5LjQ0MTIgMTMuODAxOCA5OS4yOTAyIDEzLjQxODIgOTguOTg2NCAxMy4xNjI0Qzk4LjY4MjcgMTIuOTA2NiA5OC4yNDc1IDEyLjc3ODcgOTcuNjc5MSAxMi43Nzg3Qzk3LjMyOTIgMTIuNzc4NyA5Ni45NzAzIDEyLjgzMDIgOTYuNjA2MiAxMi45MzVDOTYuMjQyMSAxMy4wMzk4IDk1Ljg1MTMgMTMuMTkwOCA5NS40MzM4IDEzLjM4OTdMOTQuOTA4IDEyLjMyNEM5NS40MTk2IDEyLjA4NzcgOTUuOTE3IDExLjkwNDggOTYuNDAwMSAxMS43NzY5Qzk2Ljg4MzMgMTEuNjQ5IDk3LjM3NTMgMTEuNTg1IDk3Ljg3OCAxMS41ODVDOTguODA3IDExLjU4NSA5OS41MzE4IDExLjgwNzEgMTAwLjA1MiAxMi4yNTI5QzEwMC41NzMgMTIuNjk4OCAxMDAuODM0IDEzLjMzODIgMTAwLjgzNCAxNC4xNzEzVjE4Ljk2MDJIOTkuNDQxMlYxOC4zMzVDOTkuMTI4NiAxOC41OTA4IDk4Ljc4NTcgMTguNzgwOCA5OC40MTA5IDE4LjkwMzRDOTguMDM3OSAxOS4wMjYgOTcuNjMyOSAxOS4wODgxIDk3LjE5NTkgMTkuMDg4MVpNOTUuOTAyOCAxNi44NTcxQzk1LjkwMjggMTcuMjA3IDk2LjA1MzggMTcuNDkxMiA5Ni4zNTc1IDE3LjcwOTdDOTYuNjYxMyAxNy45MjgyIDk3LjA0ODUgMTguMDM2NiA5Ny41MjI4IDE4LjAzNjZDOTcuOTAxMSAxOC4wMzY2IDk4LjI1MjggMTcuOTc5NyA5OC41NzQzIDE3Ljg2NkM5OC44OTU5IDE3Ljc1MjMgOTkuMTg1NCAxNy41ODE4IDk5LjQ0MTIgMTcuMzU0NVYxNi4wODk3Qzk5LjE3NjUgMTUuOTQ3NiA5OC44OTIzIDE1Ljg0MSA5OC41ODg2IDE1Ljc3Qzk4LjI4NDggMTUuNjk4OSA5Ny45NDkxIDE1LjY2MzQgOTcuNTc5NiAxNS42NjM0Qzk3LjA4NzYgMTUuNjYzNCA5Ni42ODQ0IDE1Ljc2ODIgOTYuMzcxNyAxNS45NzZDOTYuMDU5MSAxNi4xODM5IDk1LjkwMjggMTYuNDc3IDk1LjkwMjggMTYuODU3MVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMDMuMTM2IDE3LjE2OThWMTIuOTIwOEgxMDEuNjAxVjExLjcyNzJIMTAzLjEzNlY5Ljg3OTgxTDEwNC41NDMgOS41Mzg3NlYxMS43MjcySDEwNi42NzRWMTIuOTIwOEgxMDQuNTQzVjE2Ljg0MjlDMTA0LjU0MyAxNy4yMTI0IDEwNC42MjYgMTcuNDczNSAxMDQuNzkxIDE3LjYyNDVDMTA0Ljk1NyAxNy43NzU1IDEwNS4yMyAxNy44NTE5IDEwNS42MDggMTcuODUxOUMxMDUuODE2IDE3Ljg1MTkgMTA1Ljk5NyAxNy44Mzk0IDEwNi4xNDggMTcuODE2M0MxMDYuMjk5IDE3Ljc5MzIgMTA2LjQ2NiAxNy43NDcxIDEwNi42NDYgMTcuNjgxM1YxOC44NzVDMTA2LjQ0NyAxOC45NDA3IDEwNi4yMjUgMTguOTk0IDEwNS45NzggMTkuMDMxM0MxMDUuNzMxIDE5LjA2ODYgMTA1LjUwNCAxOS4wODgyIDEwNS4yOTYgMTkuMDg4MkMxMDQuNTk0IDE5LjA4ODIgMTA0LjA1OSAxOC45MjQ3IDEwMy42OSAxOC41OTc5QzEwMy4zMjEgMTguMjcxMSAxMDMuMTM2IDE3Ljc5NSAxMDMuMTM2IDE3LjE2OThaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNDUuMDI0MiAyOC4yNDMyQzQ0LjgwMzkgMjguMjQzMiA0NC42MjQ1IDI4LjA2MzggNDQuNjI0NSAyNy44NDM2VjAuMzk5NjY4QzQ0LjYyNDUgMC4xNzk0MDcgNDQuODAzOSAwIDQ1LjAyNDIgMEM0NS4yNDQ0IDAgNDUuNDIzOCAwLjE3OTQwNyA0NS40MjM4IDAuMzk5NjY4VjI3Ljg0MzZDNDUuNDIzOCAyOC4wNjM4IDQ1LjI0NDQgMjguMjQzMiA0NS4wMjQyIDI4LjI0MzJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMjIuNTUzNyAxNi4wNzM4QzI0Ljc3NDEgMTYuMDczOCAyNy45OTEgMTUuNjEzNyAyNy45OTEgMTIuOTcyM0MyNy45OTEgMTIuNzY2MyAyNy45ODU3IDEyLjU2NTYgMjcuOTM1OSAxMi4zNjQ4TDI2LjYxMjYgNi42MTY3MkMyNi4zMDcxIDUuMzUzNzcgMjYuMDM4OCA0Ljc3ODI0IDIzLjgxNjcgMy42NjgwNUMyMi4wOTM3IDIuNzg3MDEgMTguMzQwMyAxLjMzMjIxIDE3LjIzMDIgMS4zMzIyMUMxNi4xOTYzIDEuMzMyMjEgMTUuODkwOCAyLjY3MTU1IDE0LjY2NTIgMi42NzE1NUMxMy40Nzg2IDIuNjcxNTUgMTIuNTk3NSAxLjY3NjgyIDExLjQ4NzQgMS42NzY4MkMxMC40MTQ1IDEuNjc2ODIgOS43MjUyNyAyLjQwNTEgOS4xOTA2IDMuODk3MkM5LjE5MDYgMy44OTcyIDcuNjk2NzMgOC4xMDg4MSA3LjUwNDg5IDguNzIxNjRDNy40NjU4MSA4LjgzNzEgNy40NjU4MSA4Ljk2NDk5IDcuNDY1ODEgOS4wNjYyNEM3LjQ2NTgxIDEwLjcwMjIgMTMuOTEyIDE2LjA3MzggMjIuNTUzNyAxNi4wNzM4Wk0yOC4zMzU2IDE0LjA0MzRDMjguNjQxMSAxNS40OTgyIDI4LjY0MTEgMTUuNjUxIDI4LjY0MTEgMTUuODQyOEMyOC42NDExIDE4LjMzMTQgMjUuODQ1MiAxOS43MDk5IDIyLjE3MDEgMTkuNzA5OUMxMy44NjA1IDE5LjcwOTkgNi41ODQ3NiAxNC44NDYzIDYuNTg0NzYgMTEuNjI5NEM2LjU4NDc2IDExLjEzMjEgNi43MDAyMiAxMC42NzIgNi44NTI5OCAxMC4zMjc0QzMuODY3MDEgMTAuNDgzNyAwIDExLjAxODQgMCAxNC40MjcxQzAgMjAuMDE3MiAxMy4yNDk1IDI2LjkxMSAyMy43NDAzIDI2LjkxMUMzMS43ODE2IDI2LjkxMSAzMy44MTAyIDIzLjI3MzEgMzMuODEwMiAyMC40MDA4QzMzLjgxMiAxOC4xNDE0IDMxLjg1OCAxNS41NzY0IDI4LjMzNTYgMTQuMDQzNFoiIGZpbGw9IiNFRTAwMDAiLz4KPHBhdGggZD0iTTI4LjMzNTggMTQuMDQzNEMyOC42NDEzIDE1LjQ5ODIgMjguNjQxMyAxNS42NTEgMjguNjQxMyAxNS44NDI4QzI4LjY0MTMgMTguMzMxNCAyNS44NDU0IDE5LjcwOTggMjIuMTcwMyAxOS43MDk4QzEzLjg2MDcgMTkuNzA5OCA2LjU4NDk2IDE0Ljg0NjMgNi41ODQ5NiAxMS42Mjk0QzYuNTg0OTYgMTEuMTMyMSA2LjcwMDQyIDEwLjY3MiA2Ljg1MzE4IDEwLjMyNzRMNy41MDUwOSA4LjcyMTYyQzcuNDY2MDEgOC44MzcwOCA3LjQ2NjAxIDguOTY0OTcgNy40NjYwMSA5LjA2NjIyQzcuNDY2MDEgMTAuNzAyMiAxMy45MTIyIDE2LjA3MzcgMjIuNTUzOSAxNi4wNzM3QzI0Ljc3NDMgMTYuMDczNyAyNy45OTEyIDE1LjYxMzcgMjcuOTkxMiAxMi45NzIzQzI3Ljk5MTIgMTIuNzY2MyAyNy45ODU5IDEyLjU2NTUgMjcuOTM2MSAxMi4zNjQ4TDI4LjMzNTggMTQuMDQzNFoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xMTIuODgyIDE5VjkuMkgxMTcuNzk2QzExOC40NCA5LjIgMTE5LjAwNSA5LjMzMDY3IDExOS40OSA5LjU5MkMxMTkuOTg1IDkuODUzMzMgMTIwLjM3MiAxMC4yMTczIDEyMC42NTIgMTAuNjg0QzEyMC45MzIgMTEuMTQxMyAxMjEuMDcyIDExLjY3MzMgMTIxLjA3MiAxMi4yOEMxMjEuMDcyIDEyLjg1ODcgMTIwLjkzMiAxMy4zNzY3IDEyMC42NTIgMTMuODM0QzEyMC4zNzIgMTQuMjkxMyAxMTkuOTg1IDE0LjY1MDcgMTE5LjQ5IDE0LjkxMkMxMTguOTk1IDE1LjE3MzMgMTE4LjQzMSAxNS4zMDQgMTE3Ljc5NiAxNS4zMDRIMTE0LjkxMlYxOUgxMTIuODgyWk0xMTQuOTEyIDEzLjYyNEgxMTcuNTcyQzExOC4wMTEgMTMuNjI0IDExOC4zNjEgMTMuNTAyNyAxMTguNjIyIDEzLjI2QzExOC44OTMgMTMuMDE3MyAxMTkuMDI4IDEyLjY5NTMgMTE5LjAyOCAxMi4yOTRDMTE5LjAyOCAxMS44ODMzIDExOC44OTMgMTEuNTU2NyAxMTguNjIyIDExLjMxNEMxMTguMzYxIDExLjA3MTMgMTE4LjAxMSAxMC45NSAxMTcuNTcyIDEwLjk1SDExNC45MTJWMTMuNjI0Wk0xMjQuMzM2IDE5LjEyNkMxMjMuODEzIDE5LjEyNiAxMjMuMzUxIDE5LjAzMjcgMTIyLjk1IDE4Ljg0NkMxMjIuNTQ5IDE4LjY1IDEyMi4yMzYgMTguMzg0IDEyMi4wMTIgMTguMDQ4QzEyMS43ODggMTcuNzEyIDEyMS42NzYgMTcuMzI0NyAxMjEuNjc2IDE2Ljg4NkMxMjEuNjc2IDE2LjE4NiAxMjEuOTM3IDE1LjY0NDcgMTIyLjQ2IDE1LjI2MkMxMjIuOTkyIDE0Ljg3IDEyMy43MiAxNC42NzQgMTI0LjY0NCAxNC42NzRDMTI1LjI3OSAxNC42NzQgMTI1Ljg3NiAxNC43NzIgMTI2LjQzNiAxNC45NjhWMTQuNDM2QzEyNi40MzYgMTQuMDE2IDEyNi4zMDUgMTMuNjk4NyAxMjYuMDQ0IDEzLjQ4NEMxMjUuNzgzIDEzLjI2OTMgMTI1LjQgMTMuMTYyIDEyNC44OTYgMTMuMTYyQzEyNC41ODggMTMuMTYyIDEyNC4yNTcgMTMuMjEzMyAxMjMuOTAyIDEzLjMxNkMxMjMuNTQ3IDEzLjQwOTMgMTIzLjEzNyAxMy41NTg3IDEyMi42NyAxMy43NjRMMTIxLjk3IDEyLjM1QzEyMi41NDkgMTIuMDg4NyAxMjMuMDk5IDExLjg5MjcgMTIzLjYyMiAxMS43NjJDMTI0LjE1NCAxMS42MzEzIDEyNC42ODYgMTEuNTY2IDEyNS4yMTggMTEuNTY2QzEyNi4xOTggMTEuNTY2IDEyNi45NTkgMTEuODA0IDEyNy41IDEyLjI4QzEyOC4wNTEgMTIuNzQ2NyAxMjguMzI2IDEzLjQwOTMgMTI4LjMyNiAxNC4yNjhWMTlIMTI2LjQzNlYxOC40ODJDMTI2LjEzNyAxOC43MDYgMTI1LjgxNSAxOC44NjkzIDEyNS40NyAxOC45NzJDMTI1LjEyNSAxOS4wNzQ3IDEyNC43NDcgMTkuMTI2IDEyNC4zMzYgMTkuMTI2Wk0xMjMuNDk2IDE2Ljg0NEMxMjMuNDk2IDE3LjEyNCAxMjMuNjE3IDE3LjM0OCAxMjMuODYgMTcuNTE2QzEyNC4xMDMgMTcuNjc0NyAxMjQuNDI1IDE3Ljc1NCAxMjQuODI2IDE3Ljc1NEMxMjUuMTQzIDE3Ljc1NCAxMjUuNDM3IDE3LjcxNjcgMTI1LjcwOCAxNy42NDJDMTI1Ljk3OSAxNy41NTggMTI2LjIyMSAxNy40MzY3IDEyNi40MzYgMTcuMjc4VjE2LjIxNEMxMjYuMjAzIDE2LjEyMDcgMTI1Ljk2IDE2LjA1MDcgMTI1LjcwOCAxNi4wMDRDMTI1LjQ1NiAxNS45NTczIDEyNS4xODUgMTUuOTM0IDEyNC44OTYgMTUuOTM0QzEyNC40NTcgMTUuOTM0IDEyNC4xMTIgMTYuMDE4IDEyMy44NiAxNi4xODZDMTIzLjYxNyAxNi4zNDQ3IDEyMy40OTYgMTYuNTY0IDEyMy40OTYgMTYuODQ0Wk0xMjkuNzc3IDE5VjExLjcwNkgxMzEuNjk1VjEyLjUxOEMxMzEuOTI5IDEyLjIwMDcgMTMyLjIwOSAxMS45NTggMTMyLjUzNSAxMS43OUMxMzIuODYyIDExLjYyMiAxMzMuMjMxIDExLjUzOCAxMzMuNjQxIDExLjUzOEMxMzMuOTk2IDExLjU0NzMgMTM0LjI2MiAxMS42MDMzIDEzNC40MzkgMTEuNzA2VjEzLjM4NkMxMzQuMjk5IDEzLjMyMDcgMTM0LjE0NSAxMy4yNzQgMTMzLjk3NyAxMy4yNDZDMTMzLjgwOSAxMy4yMDg3IDEzMy42MzcgMTMuMTkgMTMzLjQ1OSAxMy4xOUMxMzMuMDg2IDEzLjE5IDEzMi43NDUgMTMuMjgzMyAxMzIuNDM3IDEzLjQ3QzEzMi4xMjkgMTMuNjU2NyAxMzEuODgyIDEzLjkyMjcgMTMxLjY5NSAxNC4yNjhWMTlIMTI5Ljc3N1pNMTM4Ljk1IDE5LjExMkMxMzguMTM4IDE5LjExMiAxMzcuNTIyIDE4LjkzIDEzNy4xMDIgMTguNTY2QzEzNi42OTIgMTguMTkyNyAxMzYuNDg2IDE3LjY1MTMgMTM2LjQ4NiAxNi45NDJWMTMuMzAySDEzNC45ODhWMTEuNzA2SDEzNi40ODZWOS44NDRMMTM4LjQwNCA5LjQxVjExLjcwNkgxNDAuNDlWMTMuMzAySDEzOC40MDRWMTYuNTVDMTM4LjQwNCAxNi44ODYgMTM4LjQ3OSAxNy4xMjg3IDEzOC42MjggMTcuMjc4QzEzOC43NzggMTcuNDE4IDEzOS4wMzkgMTcuNDg4IDEzOS40MTIgMTcuNDg4QzEzOS41OTkgMTcuNDg4IDEzOS43NjcgMTcuNDc4NyAxMzkuOTE2IDE3LjQ2QzE0MC4wNzUgMTcuNDMyIDE0MC4yNDggMTcuMzg1MyAxNDAuNDM0IDE3LjMyVjE4LjkwMkMxNDAuMjM4IDE4Ljk2NzMgMTM5Ljk5MSAxOS4wMTg3IDEzOS42OTIgMTkuMDU2QzEzOS40MDMgMTkuMDkzMyAxMzkuMTU2IDE5LjExMiAxMzguOTUgMTkuMTEyWk0xNDEuNDI2IDE5VjExLjcwNkgxNDMuMzQ0VjEyLjMwOEMxNDMuODk1IDExLjgxMzMgMTQ0LjU3NiAxMS41NjYgMTQ1LjM4OCAxMS41NjZDMTQ1Ljk1NyAxMS41NjYgMTQ2LjQ1NyAxMS42OTIgMTQ2Ljg4NiAxMS45NDRDMTQ3LjMyNSAxMi4xODY3IDE0Ny42NjUgMTIuNTI3MyAxNDcuOTA4IDEyLjk2NkMxNDguMTUxIDEzLjM5NTMgMTQ4LjI3MiAxMy44OTkzIDE0OC4yNzIgMTQuNDc4VjE5SDE0Ni4zNTRWMTQuNzU4QzE0Ni4zNTQgMTQuMjgyIDE0Ni4yMTkgMTMuOTA4NyAxNDUuOTQ4IDEzLjYzOEMxNDUuNjc3IDEzLjM1OCAxNDUuMzA5IDEzLjIxOCAxNDQuODQyIDEzLjIxOEMxNDQuNTE1IDEzLjIxOCAxNDQuMjI2IDEzLjI4MzMgMTQzLjk3NCAxMy40MTRDMTQzLjcyMiAxMy41MzUzIDE0My41MTIgMTMuNzEyNyAxNDMuMzQ0IDEzLjk0NlYxOUgxNDEuNDI2Wk0xNTMuMjk1IDE5LjE0QzE1Mi41NjcgMTkuMTQgMTUxLjkwNCAxOC45NzIgMTUxLjMwNyAxOC42MzZDMTUwLjcxOSAxOC4zIDE1MC4yNTIgMTcuODQ3MyAxNDkuOTA3IDE3LjI3OEMxNDkuNTYxIDE2LjcwODcgMTQ5LjM4OSAxNi4wNjkzIDE0OS4zODkgMTUuMzZDMTQ5LjM4OSAxNC42NTA3IDE0OS41NTIgMTQuMDExMyAxNDkuODc5IDEzLjQ0MkMxNTAuMjE1IDEyLjg3MjcgMTUwLjY2NyAxMi40MiAxNTEuMjM3IDEyLjA4NEMxNTEuODA2IDExLjc0OCAxNTIuNDQxIDExLjU4IDE1My4xNDEgMTEuNThDMTUzLjg0MSAxMS41OCAxNTQuNDYxIDExLjc1MjcgMTU1LjAwMyAxMi4wOThDMTU1LjU0NCAxMi40NDMzIDE1NS45NjkgMTIuOTEgMTU2LjI3NyAxMy40OThDMTU2LjU5NCAxNC4wODYgMTU2Ljc1MyAxNC43NTMzIDE1Ni43NTMgMTUuNVYxNi4wMDRIMTUxLjM0OUMxNTEuNDMzIDE2LjI5MzMgMTUxLjU2OCAxNi41NTQ3IDE1MS43NTUgMTYuNzg4QzE1MS45NTEgMTcuMDIxMyAxNTIuMTg5IDE3LjIwMzMgMTUyLjQ2OSAxNy4zMzRDMTUyLjc1OCAxNy40NjQ3IDE1My4wNjYgMTcuNTMgMTUzLjM5MyAxNy41M0MxNTMuNzE5IDE3LjUzIDE1NC4wMTggMTcuNDc4NyAxNTQuMjg5IDE3LjM3NkMxNTQuNTY5IDE3LjI3MzMgMTU0LjgwNyAxNy4xMjg3IDE1NS4wMDMgMTYuOTQyTDE1Ni4yNjMgMTguMDlDMTU1LjgxNSAxOC40NTQgMTU1LjM1MyAxOC43MiAxNTQuODc3IDE4Ljg4OEMxNTQuNDEgMTkuMDU2IDE1My44ODMgMTkuMTQgMTUzLjI5NSAxOS4xNFpNMTUxLjMyMSAxNC42MzJIMTU0Ljg2M0MxNTQuNzk3IDE0LjM0MjcgMTU0LjY3NiAxNC4wOTA3IDE1NC40OTkgMTMuODc2QzE1NC4zMzEgMTMuNjUyIDE1NC4xMjUgMTMuNDc5MyAxNTMuODgzIDEzLjM1OEMxNTMuNjQ5IDEzLjIyNzMgMTUzLjM4OCAxMy4xNjIgMTUzLjA5OSAxMy4xNjJDMTUyLjggMTMuMTYyIDE1Mi41MjkgMTMuMjIyNyAxNTIuMjg3IDEzLjM0NEMxNTIuMDQ0IDEzLjQ2NTMgMTUxLjgzOSAxMy42MzggMTUxLjY3MSAxMy44NjJDMTUxLjUxMiAxNC4wNzY3IDE1MS4zOTUgMTQuMzMzMyAxNTEuMzIxIDE0LjYzMlpNMTU3LjkyOCAxOVYxMS43MDZIMTU5Ljg0NlYxMi41MThDMTYwLjA3OSAxMi4yMDA3IDE2MC4zNTkgMTEuOTU4IDE2MC42ODYgMTEuNzlDMTYxLjAxMyAxMS42MjIgMTYxLjM4MSAxMS41MzggMTYxLjc5MiAxMS41MzhDMTYyLjE0NyAxMS41NDczIDE2Mi40MTMgMTEuNjAzMyAxNjIuNTkgMTEuNzA2VjEzLjM4NkMxNjIuNDUgMTMuMzIwNyAxNjIuMjk2IDEzLjI3NCAxNjIuMTI4IDEzLjI0NkMxNjEuOTYgMTMuMjA4NyAxNjEuNzg3IDEzLjE5IDE2MS42MSAxMy4xOUMxNjEuMjM3IDEzLjE5IDE2MC44OTYgMTMuMjgzMyAxNjAuNTg4IDEzLjQ3QzE2MC4yOCAxMy42NTY3IDE2MC4wMzMgMTMuOTIyNyAxNTkuODQ2IDE0LjI2OFYxOUgxNTcuOTI4Wk0xNzEuNDE1IDE5LjE0QzE3MC42ODcgMTkuMTQgMTcwLjAwNiAxOS4wMTQgMTY5LjM3MSAxOC43NjJDMTY4LjczNiAxOC41MDA3IDE2OC4xODEgMTguMTQxMyAxNjcuNzA1IDE3LjY4NEMxNjcuMjM4IDE3LjIyNjcgMTY2Ljg3IDE2LjY5NDcgMTY2LjU5OSAxNi4wODhDMTY2LjMzOCAxNS40NzIgMTY2LjIwNyAxNC44MDkzIDE2Ni4yMDcgMTQuMUMxNjYuMjA3IDEzLjM4MTMgMTY2LjMzOCAxMi43MTg3IDE2Ni41OTkgMTIuMTEyQzE2Ni44NyAxMS40OTYgMTY3LjI0MyAxMC45NTkzIDE2Ny43MTkgMTAuNTAyQzE2OC4xOTUgMTAuMDQ0NyAxNjguNzQ2IDkuNjkgMTY5LjM3MSA5LjQzOEMxNzAuMDA2IDkuMTc2NjcgMTcwLjY4NyA5LjA0NiAxNzEuNDE1IDkuMDQ2QzE3MS45NTYgOS4wNDYgMTcyLjQ3OSA5LjEyMDY3IDE3Mi45ODMgOS4yN0MxNzMuNDg3IDkuNDE5MzMgMTczLjk1NCA5LjYyOTMzIDE3NC4zODMgOS45QzE3NC44MjIgMTAuMTcwNyAxNzUuMTk1IDEwLjQ5NzMgMTc1LjUwMyAxMC44OEwxNzQuMTMxIDEyLjIzOEMxNzMuNzc2IDExLjc5OTMgMTczLjM2NiAxMS40NjggMTcyLjg5OSAxMS4yNDRDMTcyLjQ0MiAxMS4wMiAxNzEuOTQ3IDEwLjkwOCAxNzEuNDE1IDEwLjkwOEMxNzAuOTc2IDEwLjkwOCAxNzAuNTY2IDEwLjk5MiAxNzAuMTgzIDExLjE2QzE2OS44IDExLjMxODcgMTY5LjQ2OSAxMS41NDI3IDE2OS4xODkgMTEuODMyQzE2OC45MDkgMTIuMTEyIDE2OC42OSAxMi40NDggMTY4LjUzMSAxMi44NEMxNjguMzcyIDEzLjIyMjcgMTY4LjI5MyAxMy42NDI3IDE2OC4yOTMgMTQuMUMxNjguMjkzIDE0LjU0OCAxNjguMzcyIDE0Ljk2OCAxNjguNTMxIDE1LjM2QzE2OC42OSAxNS43NDI3IDE2OC45MTQgMTYuMDc4NyAxNjkuMjAzIDE2LjM2OEMxNjkuNDkyIDE2LjY0OCAxNjkuODI4IDE2Ljg2NzMgMTcwLjIxMSAxNy4wMjZDMTcwLjYwMyAxNy4xODQ3IDE3MS4wMjggMTcuMjY0IDE3MS40ODUgMTcuMjY0QzE3MS45OTggMTcuMjY0IDE3Mi40NzkgMTcuMTU2NyAxNzIuOTI3IDE2Ljk0MkMxNzMuMzc1IDE2LjcyNzMgMTczLjc3MiAxNi40MTkzIDE3NC4xMTcgMTYuMDE4TDE3NS40NDcgMTcuMzM0QzE3NS4xMzkgMTcuNzA3MyAxNzQuNzcgMTguMDI5MyAxNzQuMzQxIDE4LjNDMTczLjkxMiAxOC41NzA3IDE3My40NDUgMTguNzgwNyAxNzIuOTQxIDE4LjkzQzE3Mi40NDYgMTkuMDcgMTcxLjkzOCAxOS4xNCAxNzEuNDE1IDE5LjE0Wk0xNzkuODU5IDE5LjE0QzE3OS4xMzEgMTkuMTQgMTc4LjQ3MyAxOC45NzIgMTc3Ljg4NSAxOC42MzZDMTc3LjI5NyAxOC4zIDE3Ni44MyAxNy44NDczIDE3Ni40ODUgMTcuMjc4QzE3Ni4xNCAxNi43MDg3IDE3NS45NjcgMTYuMDY5MyAxNzUuOTY3IDE1LjM2QzE3NS45NjcgMTQuNjUwNyAxNzYuMTM1IDE0LjAxMTMgMTc2LjQ3MSAxMy40NDJDMTc2LjgxNiAxMi44NjMzIDE3Ny4yODMgMTIuNDA2IDE3Ny44NzEgMTIuMDdDMTc4LjQ2OCAxMS43MzQgMTc5LjEzMSAxMS41NjYgMTc5Ljg1OSAxMS41NjZDMTgwLjU4NyAxMS41NjYgMTgxLjI0NSAxMS43MzQgMTgxLjgzMyAxMi4wN0MxODIuNDMgMTIuNDA2IDE4Mi44OTcgMTIuODYzMyAxODMuMjMzIDEzLjQ0MkMxODMuNTc4IDE0LjAxMTMgMTgzLjc1MSAxNC42NTA3IDE4My43NTEgMTUuMzZDMTgzLjc1MSAxNi4wNjkzIDE4My41NzggMTYuNzA4NyAxODMuMjMzIDE3LjI3OEMxODIuODk3IDE3Ljg0NzMgMTgyLjQzNSAxOC4zIDE4MS44NDcgMTguNjM2QzE4MS4yNTkgMTguOTcyIDE4MC41OTYgMTkuMTQgMTc5Ljg1OSAxOS4xNFpNMTc5Ljg1OSAxNy40NzRDMTgwLjI0MiAxNy40NzQgMTgwLjU4MiAxNy4zODA3IDE4MC44ODEgMTcuMTk0QzE4MS4xODkgMTcuMDA3MyAxODEuNDMyIDE2Ljc1NTMgMTgxLjYwOSAxNi40MzhDMTgxLjc5NiAxNi4xMTEzIDE4MS44ODkgMTUuNzUyIDE4MS44ODkgMTUuMzZDMTgxLjg4OSAxNC45NTg3IDE4MS43OTYgMTQuNTk5MyAxODEuNjA5IDE0LjI4MkMxODEuNDMyIDEzLjk2NDcgMTgxLjE4OSAxMy43MTI3IDE4MC44ODEgMTMuNTI2QzE4MC41ODIgMTMuMzMgMTgwLjI0MiAxMy4yMzIgMTc5Ljg1OSAxMy4yMzJDMTc5LjQ4NiAxMy4yMzIgMTc5LjE0NSAxMy4zMyAxNzguODM3IDEzLjUyNkMxNzguNTI5IDEzLjcxMjcgMTc4LjI4NiAxMy45NjQ3IDE3OC4xMDkgMTQuMjgyQzE3Ny45MzIgMTQuNTk5MyAxNzcuODQzIDE0Ljk1ODcgMTc3Ljg0MyAxNS4zNkMxNzcuODQzIDE1Ljc1MiAxNzcuOTMyIDE2LjExMTMgMTc4LjEwOSAxNi40MzhDMTc4LjI4NiAxNi43NTUzIDE3OC41MjkgMTcuMDA3MyAxNzguODM3IDE3LjE5NEMxNzkuMTQ1IDE3LjM4MDcgMTc5LjQ4NiAxNy40NzQgMTc5Ljg1OSAxNy40NzRaTTE4NC45MyAxOVYxMS43MDZIMTg2Ljg0OFYxMi4zMDhDMTg3LjM5OCAxMS44MTMzIDE4OC4wOCAxMS41NjYgMTg4Ljg5MiAxMS41NjZDMTg5LjQ2MSAxMS41NjYgMTg5Ljk2IDExLjY5MiAxOTAuMzkgMTEuOTQ0QzE5MC44MjggMTIuMTg2NyAxOTEuMTY5IDEyLjUyNzMgMTkxLjQxMiAxMi45NjZDMTkxLjY1NCAxMy4zOTUzIDE5MS43NzYgMTMuODk5MyAxOTEuNzc2IDE0LjQ3OFYxOUgxODkuODU4VjE0Ljc1OEMxODkuODU4IDE0LjI4MiAxODkuNzIyIDEzLjkwODcgMTg5LjQ1MiAxMy42MzhDMTg5LjE4MSAxMy4zNTggMTg4LjgxMiAxMy4yMTggMTg4LjM0NiAxMy4yMThDMTg4LjAxOSAxMy4yMTggMTg3LjczIDEzLjI4MzMgMTg3LjQ3OCAxMy40MTRDMTg3LjIyNiAxMy41MzUzIDE4Ny4wMTYgMTMuNzEyNyAxODYuODQ4IDEzLjk0NlYxOUgxODQuOTNaTTE5My4yMjkgMTlWMTEuNzA2SDE5NS4xNDdWMTIuMzA4QzE5NS42OTcgMTEuODEzMyAxOTYuMzc5IDExLjU2NiAxOTcuMTkxIDExLjU2NkMxOTcuNzYgMTEuNTY2IDE5OC4yNTkgMTEuNjkyIDE5OC42ODkgMTEuOTQ0QzE5OS4xMjcgMTIuMTg2NyAxOTkuNDY4IDEyLjUyNzMgMTk5LjcxMSAxMi45NjZDMTk5Ljk1MyAxMy4zOTUzIDIwMC4wNzUgMTMuODk5MyAyMDAuMDc1IDE0LjQ3OFYxOUgxOTguMTU3VjE0Ljc1OEMxOTguMTU3IDE0LjI4MiAxOTguMDIxIDEzLjkwODcgMTk3Ljc1MSAxMy42MzhDMTk3LjQ4IDEzLjM1OCAxOTcuMTExIDEzLjIxOCAxOTYuNjQ1IDEzLjIxOEMxOTYuMzE4IDEzLjIxOCAxOTYuMDI5IDEzLjI4MzMgMTk1Ljc3NyAxMy40MTRDMTk1LjUyNSAxMy41MzUzIDE5NS4zMTUgMTMuNzEyNyAxOTUuMTQ3IDEzLjk0NlYxOUgxOTMuMjI5Wk0yMDUuMDk3IDE5LjE0QzIwNC4zNjkgMTkuMTQgMjAzLjcwNyAxOC45NzIgMjAzLjEwOSAxOC42MzZDMjAyLjUyMSAxOC4zIDIwMi4wNTUgMTcuODQ3MyAyMDEuNzA5IDE3LjI3OEMyMDEuMzY0IDE2LjcwODcgMjAxLjE5MSAxNi4wNjkzIDIwMS4xOTEgMTUuMzZDMjAxLjE5MSAxNC42NTA3IDIwMS4zNTUgMTQuMDExMyAyMDEuNjgxIDEzLjQ0MkMyMDIuMDE3IDEyLjg3MjcgMjAyLjQ3IDEyLjQyIDIwMy4wMzkgMTIuMDg0QzIwMy42MDkgMTEuNzQ4IDIwNC4yNDMgMTEuNTggMjA0Ljk0MyAxMS41OEMyMDUuNjQzIDExLjU4IDIwNi4yNjQgMTEuNzUyNyAyMDYuODA1IDEyLjA5OEMyMDcuMzQ3IDEyLjQ0MzMgMjA3Ljc3MSAxMi45MSAyMDguMDc5IDEzLjQ5OEMyMDguMzk3IDE0LjA4NiAyMDguNTU1IDE0Ljc1MzMgMjA4LjU1NSAxNS41VjE2LjAwNEgyMDMuMTUxQzIwMy4yMzUgMTYuMjkzMyAyMDMuMzcxIDE2LjU1NDcgMjAzLjU1NyAxNi43ODhDMjAzLjc1MyAxNy4wMjEzIDIwMy45OTEgMTcuMjAzMyAyMDQuMjcxIDE3LjMzNEMyMDQuNTYxIDE3LjQ2NDcgMjA0Ljg2OSAxNy41MyAyMDUuMTk1IDE3LjUzQzIwNS41MjIgMTcuNTMgMjA1LjgyMSAxNy40Nzg3IDIwNi4wOTEgMTcuMzc2QzIwNi4zNzEgMTcuMjczMyAyMDYuNjA5IDE3LjEyODcgMjA2LjgwNSAxNi45NDJMMjA4LjA2NSAxOC4wOUMyMDcuNjE3IDE4LjQ1NCAyMDcuMTU1IDE4LjcyIDIwNi42NzkgMTguODg4QzIwNi4yMTMgMTkuMDU2IDIwNS42ODUgMTkuMTQgMjA1LjA5NyAxOS4xNFpNMjAzLjEyMyAxNC42MzJIMjA2LjY2NUMyMDYuNiAxNC4zNDI3IDIwNi40NzkgMTQuMDkwNyAyMDYuMzAxIDEzLjg3NkMyMDYuMTMzIDEzLjY1MiAyMDUuOTI4IDEzLjQ3OTMgMjA1LjY4NSAxMy4zNThDMjA1LjQ1MiAxMy4yMjczIDIwNS4xOTEgMTMuMTYyIDIwNC45MDEgMTMuMTYyQzIwNC42MDMgMTMuMTYyIDIwNC4zMzIgMTMuMjIyNyAyMDQuMDg5IDEzLjM0NEMyMDMuODQ3IDEzLjQ2NTMgMjAzLjY0MSAxMy42MzggMjAzLjQ3MyAxMy44NjJDMjAzLjMxNSAxNC4wNzY3IDIwMy4xOTggMTQuMzMzMyAyMDMuMTIzIDE0LjYzMlpNMjEzLjI3MSAxOS4xNEMyMTIuNTUzIDE5LjE0IDIxMS45MDQgMTguOTc2NyAyMTEuMzI1IDE4LjY1QzIxMC43NDcgMTguMzE0IDIxMC4yODkgMTcuODYxMyAyMDkuOTUzIDE3LjI5MkMyMDkuNjE3IDE2LjcxMzMgMjA5LjQ0OSAxNi4wNjkzIDIwOS40NDkgMTUuMzZDMjA5LjQ0OSAxNC42NDEzIDIwOS42MTcgMTMuOTk3MyAyMDkuOTUzIDEzLjQyOEMyMTAuMjg5IDEyLjg1ODcgMjEwLjc0NyAxMi40MDYgMjExLjMyNSAxMi4wN0MyMTEuOTA0IDExLjczNCAyMTIuNTUzIDExLjU2NiAyMTMuMjcxIDExLjU2NkMyMTMuODUgMTEuNTY2IDIxNC40MDEgMTEuNjc4IDIxNC45MjMgMTEuOTAyQzIxNS40NTUgMTIuMTI2IDIxNS45MTMgMTIuNDQ4IDIxNi4yOTUgMTIuODY4TDIxNS4xMTkgMTQuMTE0QzIxNC44NDkgMTMuODE1MyAyMTQuNTY0IDEzLjU5NiAyMTQuMjY1IDEzLjQ1NkMyMTMuOTc2IDEzLjMwNjcgMjEzLjY1OSAxMy4yMzIgMjEzLjMxMyAxMy4yMzJDMjEyLjk0IDEzLjIzMiAyMTIuNjA0IDEzLjMyNTMgMjEyLjMwNSAxMy41MTJDMjEyLjAxNiAxMy42OTg3IDIxMS43ODMgMTMuOTUwNyAyMTEuNjA1IDE0LjI2OEMyMTEuNDM3IDE0LjU4NTMgMjExLjM1MyAxNC45NDkzIDIxMS4zNTMgMTUuMzZDMjExLjM1MyAxNS43NTIgMjExLjQzNyAxNi4xMTEzIDIxMS42MDUgMTYuNDM4QzIxMS43ODMgMTYuNzU1MyAyMTIuMDI1IDE3LjAwNzMgMjEyLjMzMyAxNy4xOTRDMjEyLjY0MSAxNy4zNzEzIDIxMi45ODIgMTcuNDYgMjEzLjM1NSAxNy40NkMyMTMuNjgyIDE3LjQ2IDIxMy45ODUgMTcuMzk0NyAyMTQuMjY1IDE3LjI2NEMyMTQuNTU1IDE3LjEyNCAyMTQuODMgMTYuOTE4NyAyMTUuMDkxIDE2LjY0OEwyMTYuMjM5IDE3Ljg1MkMyMTUuODY2IDE4LjI1MzMgMjE1LjQxOCAxOC41NzA3IDIxNC44OTUgMTguODA0QzIxNC4zNzMgMTkuMDI4IDIxMy44MzEgMTkuMTQgMjEzLjI3MSAxOS4xNFpNMjIwLjgzMSAxOS4xMTJDMjIwLjAxOSAxOS4xMTIgMjE5LjQwMyAxOC45MyAyMTguOTgzIDE4LjU2NkMyMTguNTczIDE4LjE5MjcgMjE4LjM2NyAxNy42NTEzIDIxOC4zNjcgMTYuOTQyVjEzLjMwMkgyMTYuODY5VjExLjcwNkgyMTguMzY3VjkuODQ0TDIyMC4yODUgOS40MVYxMS43MDZIMjIyLjM3MVYxMy4zMDJIMjIwLjI4NVYxNi41NUMyMjAuMjg1IDE2Ljg4NiAyMjAuMzYgMTcuMTI4NyAyMjAuNTA5IDE3LjI3OEMyMjAuNjU5IDE3LjQxOCAyMjAuOTIgMTcuNDg4IDIyMS4yOTMgMTcuNDg4QzIyMS40OCAxNy40ODggMjIxLjY0OCAxNy40Nzg3IDIyMS43OTcgMTcuNDZDMjIxLjk1NiAxNy40MzIgMjIyLjEyOSAxNy4zODUzIDIyMi4zMTUgMTcuMzJWMTguOTAyQzIyMi4xMTkgMTguOTY3MyAyMjEuODcyIDE5LjAxODcgMjIxLjU3MyAxOS4wNTZDMjIxLjI4NCAxOS4wOTMzIDIyMS4wMzcgMTkuMTEyIDIyMC44MzEgMTkuMTEyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==" alt="Red Hat Partner Connect" style="height: 30px; width: auto;">
+            <span style="color: var(--asce-border);">|</span>
+            <img src="data:image/png;base64,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" alt="IBM Partner Plus" style="height: 22px; filter: invert(1); width: auto;">
+          </div>
+          <h3 style="font-size: 1.3rem; color: #fff; font-weight: 700;">
+            Red Hat Partner Connect (Build Module) • IBM Partner Plus • TD SYNNEX Public Sector
+          </h3>
+          <p style="color: var(--asce-text-muted); font-size: 0.92rem; max-width: 860px; margin-top: 0.25rem;">
+            <strong style="color: #fff;">ASCE GOVBEN CaaS (v10.0.0)</strong> is built on <strong style="color: #fff;">Red Hat Universal Base Image 9 (UBI 9)</strong>, passed <strong style="color: #42be65;">11/11 Red Hat OpenShift Preflight checks with Security Health Index Grade A (0 Vulnerabilities)</strong>, validated in the <strong style="color: #fff;">IBM Cloud Private Catalog</strong>, and governed by <strong style="color: #fff;">IBM watsonx.governance</strong> for OMB M-24-10 compliance.
+          </p>
         </div>
-    </section>
+      </div>
 
-    <section class="contact">
-        <div class="container">
-            <div class="contact-card">
-                <h2>Get in Touch</h2>
-                <p>Interested in ASCE for your compliance workflows? We'd love to connect.</p>
-                <a href="mailto:tbullitt18@gmail.com">Contact Us</a>
-            </div>
+      <div class="asce-rh-cred-pills">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="asce-rh-cred-pill">✓ Red Hat 2026 Portfolio Credential: Seller Foundational</span>
+          <span class="asce-rh-cred-pill">✓ Red Hat Container Management TDP: Seller</span>
+          <span class="asce-rh-cred-pill">✓ Red Hat AI Platform TDP: Seller</span>
+          <span class="asce-rh-cred-pill">✓ IBM watsonx.governance (Group BPSWDRC183)</span>
+          <span class="asce-rh-cred-pill">✓ TD SYNNEX Public Sector (GSA / SEWP / DoD ESI)</span>
         </div>
-    </section>
+        <div style="font-size: 0.78rem; color: var(--asce-text-muted);">
+          Red Hat Partner ID: <strong style="color: #fff;">MDM-P002000000044183</strong> • IBM CEID: <strong style="color: #fff;">10x6kg</strong> • TD SYNNEX Cust: <strong style="color: #fff;">#823155</strong> • CAGE: <strong style="color: #fff;">26NM9</strong> • D-U-N-S: <strong style="color: #fff;">14-873-9839</strong>
+        </div>
+      </div>
+    </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 ASCE Technologies. All rights reserved.</p>
-            <p class="disclaimer">ASCE is a decision-support prototype. All recommendations require trained human review before any eligibility decision or adverse action. ASCE is not authorized by, affiliated with, or endorsed by FEMA, DHS, or any government agency.</p>
+    <!-- LIVE GATEWAY CALLOUT -->
+    <div class="asce-live-banner">
+      <div class="asce-live-info">
+        <h3><span class="asce-live-pill"></span> Synthetic Prototype Gateway Live on IBM Cloud Code Engine</h3>
+        <p>
+          Experience our deterministic decision-support engine on demand. Submit test caseworker determinations against 44 CFR (FEMA) and 38 CFR (VA) to view cryptographic tamper-evident receipts instantly.
+        </p>
+      </div>
+      <div>
+        <a href="https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/" target="_blank" class="asce-btn asce-btn-primary" style="padding: 0.85rem 1.75rem;">
+          Test Live Decision Gateway ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 1080p SYSTEM WALKTHROUGH VIDEO (CLONED FOUNDER VOICEOVER) -->
+    <div id="walkthrough" style="background: var(--asce-card-bg); border: 1px solid var(--asce-border); border-radius: 14px; padding: 2rem 2.25rem; margin: 2rem 0 1rem; box-shadow: 0 14px 38px rgba(0,0,0,0.4);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div>
+          <span class="asce-triage-tag" style="color: var(--asce-accent-cyan); margin-bottom: 0.25rem;">1080p Guided Architecture Walkthrough • Narrated by Founder Todd Bullitt</span>
+          <h3 style="font-size: 1.4rem; color: #fff; font-weight: 700; margin: 0;">See ASCE GovBen CaaS Intercept Compliance Defects Pre-Commit</h3>
         </div>
-    </footer>
+        <a href="https://ascetech.org/validate" class="asce-btn asce-btn-outline" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+          Run 5,000-Packet Synthetic Benchmark →
+        </a>
+      </div>
+      <video controls preload="metadata" style="width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: #000;">
+        <source src="https://ascetech.org/wp-content/uploads/2026/11/ASCE_GovBen_Walkthrough_Todd_Voice.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM SECTION -->
+  <section class="asce-section" id="problem">
+    <h2 class="asce-section-title">The Backlog Crisis Isn't a Staffing Shortage.</h2>
+    <p class="asce-section-subtitle">
+      Over 60% of stalled government benefits cases are trapped in automated administrative loops that temp workers and generic generative AI cannot solve.
+    </p>
+
+    <div class="asce-grid-4">
+      <div class="asce-card">
+        <div class="asce-card-icon">🔄</div>
+        <h3>The 30-Day "RFI Loop"</h3>
+        <p>Uncertain caseworkers default to requesting documents already submitted or verified in state databases—triggering mandatory 30-day freezes on every touch.</p>
+      </div>
+      <div class="asce-card">
+        <div class="asce-card-icon">⚠️</div>
+        <h3>False Conflict Lockouts</h3>
+        <p>Cosmetic formatting differences (e.g., street abbreviations) are misclassified as potential fraud, dumping legitimate households into 90-day investigation queues.</p>
+      </div>
+      <div class="asce-card">
+        <div class="asce-card-icon">📉</div>
+        <h3>The Appeal Doom Loop</h3>
+        <p>Overwhelmed caseworkers issue procedural denials to meet quotas. Citizens immediately appeal and reapply, doubling the agency's workload.</p>
+      </div>
+      <div class="asce-card">
+        <div class="asce-card-icon">⏳</div>
+        <h3>Statutory Cliff Breaches</h3>
+        <p>First-in, first-out processing causes cases approaching federal deadlines (Medicaid 45-day, SNAP 7-day) to expire, triggering federal clawbacks and audits.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE SOLUTION / TRIAGE VISUAL -->
+  <section class="asce-section" id="solution">
+    <h2 class="asce-section-title">The Intelligent Clearinghouse: How ASCE Resolves It</h2>
+    <p class="asce-section-subtitle">
+      Deployed as an invisible middleware layer between agency intake and core databases, ASCE triages backlogs into actionable streams without ripping or replacing existing IT.
+    </p>
+
+    <div class="asce-triage-container">
+      <h3 style="font-size: 1.5rem; color: #fff;">The ASCE 48-Hour Historical Backlog Sweep</h3>
+      <p style="color: var(--asce-text-muted); max-width: 720px; margin: 0.5rem auto 2.5rem;">
+        Batch-ingests stalled legacy databases to automatically isolate, categorize, and accelerate decisions at 10,000+ files per hour:
+      </p>
+
+      <div class="asce-triage-flow">
+        <div class="asce-triage-box highlight">
+          <span class="asce-triage-tag" style="color: var(--asce-accent-green);">~45% of Backlog</span>
+          <h4>The Invisible Clear</h4>
+          <p>Files where all statutory proofs exist in the database, frozen only for lack of human touch. Packaged for single-click bulk supervisor approval.</p>
+        </div>
+
+        <div class="asce-triage-box warning">
+          <span class="asce-triage-tag" style="color: var(--asce-accent-cyan);">~35% of Backlog</span>
+          <h4>Surgical Deficiency</h4>
+          <p>Strips away false conflicts and identifies the EXACT single document needed from the citizen, ending generic 30-day RFI ping-pong.</p>
+        </div>
+
+        <div class="asce-triage-box danger">
+          <span class="asce-triage-tag" style="color: #da1e28;">~20% of Backlog</span>
+          <h4>Statutory Cliff Alert</h4>
+          <p>Identifies cases within 48 hours of federal statutory deadlines and surfaces them to senior caseworkers to prevent state default penalties.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE ROI CALCULATOR -->
+    <div class="asce-calc-wrapper" id="calculator">
+      <div style="text-align: center;">
+        <span class="asce-triage-tag" style="color: var(--asce-accent-cyan);">Interactive Assessment Tool</span>
+        <h3 style="font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem;">Estimate Your 48-Hour Sweep Impact</h3>
+        <p style="color: var(--asce-text-muted); max-width: 700px; margin: 0 auto;">
+          Adjust your agency's pending case volume and hourly caseworker rate to calculate immediate hours and labor budget saved:
+        </p>
+      </div>
+
+      <div class="asce-calc-grid">
+        <div class="asce-calc-controls">
+          <div class="asce-slider-group">
+            <div class="asce-slider-header">
+              <span>Pending Backlog Cases:</span>
+              <span id="asce-cases-val" class="asce-slider-val">25,000</span>
+            </div>
+            <input type="range" id="asce-cases-input" class="asce-range" min="2000" max="100000" step="1000" value="25000" oninput="asceUpdateCalc()">
+          </div>
+
+          <div class="asce-slider-group">
+            <div class="asce-slider-header">
+              <span>Caseworker Loaded Rate ($/hr):</span>
+              <span id="asce-rate-val" class="asce-slider-val">$45/hr</span>
+            </div>
+            <input type="range" id="asce-rate-input" class="asce-range" min="25" max="85" step="5" value="45" oninput="asceUpdateCalc()">
+          </div>
+
+          <div style="font-size: 0.85rem; color: var(--asce-text-muted); line-height: 1.5;">
+            *Baseline benchmark: Reduces average handling time on cleared files from 35 mins down to 3 mins (75%+ efficiency gain).
+          </div>
+        </div>
+
+        <div class="asce-calc-results">
+          <div class="asce-calc-metric">
+            <div class="asce-metric-label">Immediate Cleared Cases (45%)</div>
+            <div id="asce-res-cleared" class="asce-metric-val green">11,250</div>
+          </div>
+
+          <div class="asce-calc-metric">
+            <div class="asce-metric-label">Casework Hours Reclaimed</div>
+            <div id="asce-res-hours" class="asce-metric-val blue">6,000 hrs</div>
+          </div>
+
+          <div class="asce-calc-metric" style="grid-column: span 2;">
+            <div class="asce-metric-label">Estimated Labor Cost Savings</div>
+            <div id="asce-res-savings" class="asce-metric-val" style="color: #00d4ff; font-size: 2.1rem;">$270,000</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="#contact" class="asce-btn asce-btn-primary" style="padding: 0.9rem 2.25rem;">
+          Request a Custom 48-Hour Backlog Audit →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE CAPABILITIES -->
+  <section class="asce-section" id="capabilities">
+    <h2 class="asce-section-title">Engineered for Deterministic Statutory Compliance</h2>
+    <p class="asce-section-subtitle">
+      Unlike unguarded generative models, ASCE enforces deterministic statutory rule gates verified against whitelisted CFR sections with cryptographic audit receipts.
+    </p>
+
+    <div class="asce-grid-4">
+      <div class="asce-card">
+        <div class="asce-card-icon">🛡️</div>
+        <h3>100% Deterministic Gate</h3>
+        <p>Decisions and statutory deadlines are computed strictly by deterministic state machines. AI is never permitted to adjudicate legal rights or create policy.</p>
+      </div>
+      <div class="asce-card">
+        <div class="asce-card-icon">🛑</div>
+        <h3>Redundant RFI Interceptor</h3>
+        <p>Blocks caseworkers from generating unnecessary document requests when primary verified records already exist in the system cache or state databases.</p>
+      </div>
+      <div class="asce-card">
+        <div class="asce-card-icon">🔏</div>
+        <h3>Tamper-Evident Receipts</h3>
+        <p>Produces immutable ISO 8601 UTC receipts with SHA-256 hashes of inputs, CFR citations, and supervisor approvals for instant OIG audit defense.</p>
+      </div>
+      <div class="asce-card">
+        <div class="asce-card-icon">🔌</div>
+        <h3>Zero Rip-and-Replace</h3>
+        <p>Operates as a stateless Compliance-as-a-Service (CaaS) REST API, integrating seamlessly with Salesforce Public Sector, Pegasystems, or legacy MMIS.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE SERVE -->
+  <section class="asce-section" id="partners">
+    <h2 class="asce-section-title">Built for Prime Contractors &amp; Government Agencies</h2>
+    <div class="asce-split-grid">
+      <div class="asce-split-card">
+        <h3>For Prime Contractors (Maximus, Booz Allen, Leidos)</h3>
+        <p style="color: var(--asce-text-muted);">
+          Protect your state and federal contract margins against SLA delays and high caseworker attrition:
+        </p>
+        <ul>
+          <li><span>✓</span> <strong>Clear Inherited Backlogs on Day 1:</strong> Triage 50,000+ inherited files in 48 hours.</li>
+          <li><span>✓</span> <strong>Cut Casework Handling Time by 75%:</strong> From 35 minutes down to 3 minutes per case.</li>
+          <li><span>✓</span> <strong>Hit Mandated Small Business Goals:</strong> Team with an approved SDB / Minority IBM &amp; Red Hat Partner, procurable via TD SYNNEX Public Sector (GSA MAS 70, NASA SEWP V, DoD ESI BPA).</li>
+          <li><span>✓</span> <strong>Eliminate Contract SLA Penalties:</strong> Meet statutory processing deadlines automatically.</li>
+        </ul>
+      </div>
+
+      <div class="asce-split-card">
+        <h3>For State Health &amp; Human Services (Medicaid / SNAP / FEMA)</h3>
+        <p style="color: var(--asce-text-muted);">
+          Safeguard program integrity and stop wrongful procedural disenrollments:
+        </p>
+        <ul>
+          <li><span>✓</span> <strong>Automated Renewal Validation:</strong> Strict compliance with 42 CFR § 435.912 and 7 CFR § 273.14.</li>
+          <li><span>✓</span> <strong>Prevent Administrative Evictions:</strong> End false data mismatches before benefits lapse.</li>
+          <li><span>✓</span> <strong>Defend Federal Matching Funds:</strong> Audit-ready cryptographic proof against CMS disallowances.</li>
+          <li><span>✓</span> <strong>Disaster Relief Surge Scale:</strong> Autoscale horizontally on IBM Cloud Code Engine.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & CTA -->
+  <section class="asce-section" id="contact">
+    <div class="asce-contact-box">
+      <h2>Ready to Triage Your Backlog?</h2>
+      <p>
+        Connect with our engineering and partner team for an exploratory backlog assessment, architecture review, or teaming discussion.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="mailto:t.bullitt@ascetech.org?subject=ASCE%20Backlog%20Assessment%20Inquiry" class="asce-btn asce-btn-primary" style="font-size: 1.05rem; padding: 1rem 2.5rem;">
+          Schedule a 15-Minute Briefing →
+        </a>
+        <a href="tel:16784480706" class="asce-btn asce-btn-outline" style="font-size: 1.05rem; padding: 1rem 2rem;">
+          Call Partner Desk: (678) 448-0706
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="asce-footer">
+    <div class="asce-footer-content">
+      <div>
+        <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.1rem;">ASCE Technologies LLC</h4>
+        <p>The Intelligent Clearinghouse for Government Benefits Administration.</p>
+        <p style="margin-top: 0.5rem;">Louisville, KY • Atlanta, GA</p>
+        <p>Email: t.bullitt@ascetech.org | Phone: (678) 448-0706</p>
+      </div>
+
+      <div>
+        <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.1rem;">Partnership &amp; Procurement</h4>
+        <p>Official IBM Business Partner | CEID: 10x6kg | Contract: USFVIISSXFW</p>
+        <p>Red Hat Technology Partner | Partner ID: MDM-P002000000044183</p>
+        <p>TD SYNNEX Public Sector | GSA MAS Schedule 70, NASA SEWP V &amp; Red Hat DoD ESI BPA | Cust #823155</p>
+        <p>SAM.gov UEI: T5SKKW6K5W55 | CAGE: 26NM9 | D-U-N-S: 14-873-9839</p>
+        <p>NAICS: 541511, 541512, 541519, 518210 | USPTO Patent App #64/168,240</p>
+      </div>
+    </div>
+
+    <div class="asce-footer-bottom">
+      <p>&copy; 2026 ASCE Technologies LLC. All rights reserved. U.S. Provisional Patent Application Filed. Red Hat OpenShift &amp; UBI 9 Preflight Validated (11/11 Pass) • IBM watsonx.governance Ready • Available via TD SYNNEX Public Sector.</p>
+    </div>
+  </footer>
+
+  <!-- CALCULATOR SCRIPT -->
+  <script>
+    function asceUpdateCalc() {
+      const cases = parseInt(document.getElementById('asce-cases-input').value, 10);
+      const rate = parseInt(document.getElementById('asce-rate-input').value, 10);
+
+      document.getElementById('asce-cases-val').innerText = cases.toLocaleString();
+      document.getElementById('asce-rate-val').innerText = '$' + rate + '/hr';
+
+      // 45% cleared immediately
+      const cleared = Math.round(cases * 0.45);
+      // 32 mins saved per cleared case (35 min baseline -> 3 min touch)
+      const hoursSaved = Math.round(cleared * (32 / 60));
+      const dollarsSaved = Math.round(hoursSaved * rate);
+
+      document.getElementById('asce-res-cleared').innerText = cleared.toLocaleString();
+      document.getElementById('asce-res-hours').innerText = hoursSaved.toLocaleString() + ' hrs';
+      document.getElementById('asce-res-savings').innerText = '$' + dollarsSaved.toLocaleString();
+    }
+  </script>
+
+</div>
 </body>
 </html>

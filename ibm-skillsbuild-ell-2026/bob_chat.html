@@ -708,7 +708,7 @@
       <div class="shield-mark">ASCE</div>
       <div>
         <div class="brand-title">ASCE TECHNOLOGIES LLC • GOVBEN CaaS v10.0</div>
-        <div class="brand-sub">Track #4 Government &amp; Public Services • IBM Partner CEID: 10x6kg • Red Hat UBI 9 • NIST 800-63B AAL3</div>
+        <div class="brand-sub">Track #4 Gov &amp; Public Services • Python 3.11+ / Flask 3.0 • 30-CFR Engine • OpenCV 4.8 • 80-Col COBOL/EBCDIC • Red Hat UBI 9</div>
       </div>
     </div>
 
@@ -722,13 +722,13 @@
 
       <button id="btnViewClient" class="tab-btn active" onclick="setLeftPane('client')">Legacy Win2000 + E-Vault</button>
       <button id="btnView3270" class="tab-btn" onclick="setLeftPane('cics')">IBM z/OS CICS 3270 + COBOL</button>
-      <button id="btnViewArch" class="tab-btn" onclick="setLeftPane('arch')">Legacy Hook Architecture</button>
+      <button id="btnViewArch" class="tab-btn" onclick="setLeftPane('arch')">Tech Stack &amp; IBM Bob</button>
     </div>
 
     <div class="kpi-strip">
-      <div class="kpi-pill">Review Time: <strong>42m → 28s (-85%)</strong></div>
-      <div class="kpi-pill">Surge: <strong>5,000 / 1.79s</strong></div>
-      <div class="kpi-pill roof">INVISIBLE ROOF: ARMED</div>
+      <div class="kpi-pill">Demo Target: <strong>42m → 28s (-85%)</strong></div>
+      <div class="kpi-pill">Sim Cases: <strong>4 Agency Fixtures</strong></div>
+      <div class="kpi-pill roof">DEMO SHIELD: ARMED</div>
     </div>
   </header>
 
@@ -845,37 +845,40 @@
           Outbound Adverse Disposition intercepted prior to DB2 COMMIT. Docked IBM Bob Caseworker Co-Pilot has staged deterministic statutory remediation.
         </div>
         <div style="color:#fde047; font-size:11px; font-weight:700;">
-          LIVE 80-COLUMN FIXED-WIDTH COBOL COPYBOOK (`mainframe_adapter.py`):
+          DEMO 80-COLUMN FIXED-WIDTH COBOL COPYBOOK (`mainframe_adapter.py`):
         </div>
-        <pre id="cobolBufferPre" class="cobol-pre">Loading deterministic 80-column EBCDIC buffer...</pre>
+        <pre id="cobolBufferPre" class="cobol-pre">Loading deterministic 80-column COBOL record buffer...</pre>
         <div style="margin-top:auto; color:#38bdf8; font-size:10.5px; display:flex; justify-content:space-between;">
           <span>PF1=HELP &nbsp; PF3=EXIT &nbsp; PF9=HOLD-INSPECT &nbsp; PF12=COMMIT-MQ</span>
-          <span id="cicsShaLine">IBM CLOUDANT IMMUTABLE AUDIT LEDGER</span>
+<span id="cicsShaLine">CRYPTOGRAPHIC AUDIT RECEIPT (DEMO SIMULATION)</span>
         </div>
       </div>
 
-      <!-- MODE 3: HOW WE DEPLOY ONTO REAL LEGACY SYSTEMS -->
+      <!-- MODE 3: EXACT TECH STACK, IBM BOB USAGE & LEGACY ATTACHMENT -->
       <div id="viewArchWrap" class="arch-view">
         <div class="arch-layer">
-          <h4>Layer 1: Zero-Touch Workstation Attachment (EHLLAPI &amp; Win32 UI Automation)</h4>
+          <h4>1. How IBM Bob Was Used (SDLC + MCP Co-Developer &amp; Bounded Co-Pilot)</h4>
           <p>
-            Government caseworkers run locked-down IBM Personal Communications (3270), Citrix VDI, or legacy WinForms/IE portals (NEMIS, GAMMIS, COMPASS). The <strong>ASCE × IBM Bob Sidecar</strong> reads active Case IDs directly from the 3270 Presentation Space (<code>PCSHLL32.DLL</code>) or Windows UI Automation tree—requiring <strong>zero legacy API development and zero manual copy-pasting</strong>.
+            <strong>Build &amp; IV&amp;V Engineering:</strong> Used <strong>IBM Bob</strong> with local MCP tools (<code>filesystem</code>, <code>memory</code>, <code>pdf</code>, <code>sequential-thinking</code>, <code>chrome-devtools</code>, <code>puppeteer</code> in <code>bob-mcp-config.json</code>) to scaffold this 3-pane sidecar UI, build the 80-col COBOL/EBCDIC bridge (<code>mainframe_adapter.py</code>) &amp; OpenCV wet-ink verifier (<code>vision_ai.py</code>), and enforce fail-closed schema/honesty hardening.<br/>
+            <strong>Runtime Co-Pilot Boundary ("Bob Explains, Engine Decides"):</strong> Docked sidecar translates deterministic CFR findings and remediation steps into plain English; it never computes eligibility, overrides <code>compliance_engine.py</code> <code>hard_lock</code> vetoes, or bypasses human sign-off.
           </p>
-          <div class="arch-code">Hook: IBM EHLLAPI Function 05 (Read Presentation Space) + Edge Enterprise SidePanel Policy</div>
+          <div class="arch-code">IBM Bob Role: MCP Engineering + Adversarial IV&amp;V + Caseworker Explanation Sidecar (API simulated offline in demo)</div>
         </div>
         <div class="arch-layer l2">
-          <h4>Layer 2: Pre-Commit Network &amp; Queue Interceptor ("The Invisible Roof")</h4>
+          <h4>2. Core Stack Executed Locally Here (Python, 30-CFR Rules, OpenCV &amp; COBOL)</h4>
           <p>
-            Before an erroneous denial or nightly batch disenrollment commits to DB2, ASCE intercepts the transaction via <strong>IBM MQ (`QM1/ASCE.AUDIT.QUEUE`)</strong> or CICS Global User Exit (`XPCFTCH`). <code>compliance_engine.py</code> runs 100% deterministic statutory math (44 CFR, 42 CFR, 7 CFR, 38 CFR) in <strong>0.35 ms</strong>—zero LLM hallucinations.
+            <strong>Backend &amp; Statutory Spine:</strong> <strong>Python 3.11+</strong> &amp; <strong>Flask 3.0.0</strong> (<code>compliance_engine.py</code>, <code>agencies/*.py</code>, <code>surge_api.py</code>, <code>templates.py</code>) running <strong>30 CFR sections</strong> across 7 programs (FEMA 44 CFR, VA 38 CFR, DUA 20 CFR 625, Medicaid 42 CFR, SNAP 7 CFR, SSA, HUD) + <code>ecfr_check.py</code> eCFR/Federal Register change monitor.<br/>
+            <strong>Vision, Mainframe &amp; Ops:</strong> <strong>OpenCV 4.8</strong> active-contour wet-ink signature verification (<code>vision_ai.py</code>), <code>pdfplumber 0.10.3</code> / <code>Pillow</code> / <code>NumPy</code> (<code>doc_ingest.py</code>), 80-col ASCII &amp; <code>cp037</code> EBCDIC COBOL copybook generator (<code>mainframe_adapter.py</code>), <code>SHA-256</code> canonical audit receipts, <code>SQLite WAL</code> session pattern (<code>fed_auth.py</code>), <strong>Red Hat UBI 9</strong> non-root container (<code>Dockerfile</code>) + OpenShift YAML, <code>pytest</code> (350+ tests) &amp; 10,000-case synthetic benchmark (0 mismatches).
           </p>
-          <div class="arch-code">Throughput: 5,000 Cases in 1.79s (2,793 cases/sec) on Red Hat UBI 9 &amp; IBM Cloud Code Engine</div>
+          <div class="arch-code">Active Live Locally: compliance_engine.py + mainframe_adapter.py (80-col buffer) + hashlib SHA-256 receipts</div>
         </div>
         <div class="arch-layer l3">
-          <h4>Layer 3: Bidirectional Field Injection &amp; 80-Column EBCDIC Copybook Bridge</h4>
+          <h4>3. Zero-Touch Legacy Attachment &amp; Honest Demo Simulation Boundary</h4>
           <p>
-            When the caseworker clicks <strong>Write-Back Remediation</strong> in the Bob Co-Pilot, ASCE injects the verified statutory citation straight into the legacy rationale box via UIA/EHLLAPI and emits a fixed-width <strong>80-column CCSID-500 EBCDIC COBOL record</strong> (`mainframe_adapter.py`) with a tamper-evident <code>SHA-256</code> receipt to IBM Cloudant.
+            <strong>Enterprise Integration Design:</strong> Reads locked-down 3270/WinForms screens via <strong>EHLLAPI</strong> (<code>PCSHLL32.DLL</code>) / Win32 UIA, intercepts pre-commit adverse actions on <strong>IBM MQ</strong> (<code>QM1/ASCE.AUDIT.QUEUE</code>), and connects optionally (when credentialed in <code>app.py</code>) to <strong>watsonx.ai</strong> Granite (<code>ibm/granite-4-h-small</code> / <code>granite-3-8b-instruct</code>), <strong>watsonx Orchestrate</strong> pass-through (<code>PASS_THROUGH_NO_AGENT_TEXT_USED</code>), and Cloudant persistence.<br/>
+            <strong>Standalone Sandbox Scope:</strong> External transports (<strong>IBM Bob API, watsonx, MQ, EHLLAPI, PIV IdP</strong>) run in <strong>demo simulation</strong> (<code>simulated: true</code>) with 0 lines of legacy COBOL changed (illustrative 42m → 28s workflow target).
           </p>
-          <div class="arch-code">Result: 85% Caseworker Time Saved (42m → 28s) • Clears 8-Week Agency Backlogs</div>
+          <div class="arch-code">Honesty Boundary: Local Python rules + COBOL formatting run live here; mainframe/IBM Cloud transports are demo-simulated</div>
         </div>
       </div>
     </section>
@@ -905,33 +908,33 @@
           <div class="copilot-title">
             <span>ASCE × IBM Bob — Caseworker Co-Pilot</span>
           </div>
-          <div class="copilot-sub">Orchestrated by IBM watsonx Orchestrate • Grounded by ASCE Deterministic Engine</div>
+          <div class="copilot-sub">Python 3.11+ / Flask • Built w/ IBM Bob MCP • Bounded Co-Pilot Demo</div>
         </div>
-        <span class="live-pill">SIDECAR DOCKED</span>
+        <span class="live-pill">DEMO SIDECAR</span>
       </div>
 
       <!-- PINNED 4-STEP WATSONX ORCHESTRATE WORKFLOW -->
       <div class="wxo-panel">
         <div class="wxo-top">
-          <span>IBM watsonx Orchestrate — Live 4-Step Execution Flow</span>
-          <span id="wxoLatencyBadge" style="color:#6ee7b7;">TOTAL: 7.25 ms</span>
+          <span>Simulated 4-Step Demo Workflow (* synthetic target, no live MQ/EHLLAPI)</span>
+          <span id="wxoLatencyBadge" style="color:#6ee7b7;">DEMO TARGET: 7.25 ms (SYNTHETIC)</span>
         </div>
         <div class="wxo-steps" id="wxoStepsGrid">
           <div class="wxo-step">
-            <div class="wxo-step-hdr"><span>1. EHLLAPI &amp; E-Vault Sync</span><span class="wxo-step-ms">4.2 ms</span></div>
+            <div class="wxo-step-hdr"><span>1. EHLLAPI &amp; E-Vault Sync</span><span class="wxo-step-ms">4.2 ms*</span></div>
             <div class="wxo-step-sub" id="stepSub1">Screen buffer &amp; 200-DPI scan ingested</div>
           </div>
           <div class="wxo-step">
-            <div class="wxo-step-hdr"><span>2. ASCE CFR Guardrail</span><span class="wxo-step-ms">0.35 ms</span></div>
+            <div class="wxo-step-hdr"><span>2. ASCE CFR Guardrail</span><span class="wxo-step-ms" id="stepMs2">local ms</span></div>
             <div class="wxo-step-sub" id="stepSub2">Deterministic statutory verification</div>
           </div>
           <div class="wxo-step">
-            <div class="wxo-step-hdr"><span>3. Ex-Parte / Churn Shield</span><span class="wxo-step-ms">0.8 ms</span></div>
+            <div class="wxo-step-hdr"><span>3. Ex-Parte / Churn Shield</span><span class="wxo-step-ms">0.8 ms*</span></div>
             <div class="wxo-step-sub" id="stepSub3">Duplicate doc request blocked</div>
           </div>
           <div class="wxo-step">
-            <div class="wxo-step-hdr"><span>4. COBOL &amp; UI Write-Back</span><span class="wxo-step-ms">1.9 ms</span></div>
-            <div class="wxo-step-sub" id="stepSub4">80-col EBCDIC staged to IBM MQ</div>
+            <div class="wxo-step-hdr"><span>4. COBOL &amp; UI Write-Back</span><span class="wxo-step-ms">1.9 ms*</span></div>
+            <div class="wxo-step-sub" id="stepSub4">80-col ASCII staged (demo preview)</div>
           </div>
         </div>
       </div>
@@ -945,14 +948,14 @@
           <button class="chip-btn" onclick="syncLegacyScreen()">Sync &amp; Audit Active Screen</button>
           <button class="chip-btn" onclick="simulateLegacyDenialClick()">Why Was Adverse Action Blocked?</button>
           <button class="chip-btn writeback" onclick="applyWritebackRemediation()">Write-Back Remediation to Legacy Client</button>
-          <button class="chip-btn" onclick="askLegacyArchitecture()">How Legacy Hook Works</button>
+          <button class="chip-btn" onclick="askLegacyArchitecture()">Tech Stack &amp; IBM Bob Usage</button>
         </div>
         <div class="prompt-row">
           <input
             type="text"
             id="messageInput"
             class="prompt-input"
-            placeholder="Ask Caseworker Co-Pilot (e.g., 'Explain 42 CFR ex-parte rule' or 'Write remediation to legacy')..."
+            placeholder="Ask Caseworker Co-Pilot (e.g., 'Explain tech stack &amp; IBM Bob usage' or 'Write remediation')..."
             onkeypress="if(event.key==='Enter') sendCopilotPrompt();"
           />
           <button class="prompt-send" onclick="sendCopilotPrompt()">EXECUTE</button>
@@ -999,10 +1002,16 @@
         document.getElementById('stepSub2').innerText = steps[1].detail;
         document.getElementById('stepSub3').innerText = steps[2].detail;
         document.getElementById('stepSub4').innerText = steps[3].detail;
+        if (steps[1].latency) {
+          const m = steps[1].latency.match(/^[\d.]+\s*ms/);
+          if (m) {
+            document.getElementById('stepMs2').innerText = m[0] + ' live';
+          }
+        }
       }
       if (sha256) {
         document.getElementById('shaBadge').innerText = 'SHA-256: ' + sha256.substring(0, 16) + '...';
-        document.getElementById('cicsShaLine').innerText = 'CLOUDANT SHA-256: ' + sha256.substring(0, 28) + '...';
+        document.getElementById('cicsShaLine').innerText = 'SHA-256 RECEIPT (DEMO): ' + sha256.substring(0, 28) + '...';
       }
     }
 
@@ -1014,6 +1023,15 @@
       document.getElementById('btnViewClient').className = 'tab-btn' + (mode === 'client' ? ' active' : '');
       document.getElementById('btnView3270').className = 'tab-btn' + (mode === 'cics' ? ' active' : '');
       document.getElementById('btnViewArch').className = 'tab-btn' + (mode === 'arch' ? ' active' : '');
+
+      const caption = document.getElementById('leftCaptionText');
+      if (mode === 'cics') {
+        caption.innerText = 'IBM z/OS CICS 3270 & 80-COLUMN COBOL COPYBOOK BUFFER (DEMO PREVIEW)';
+      } else if (mode === 'arch') {
+        caption.innerText = 'EXACT TECH STACK, IBM BOB USAGE & ZERO-TOUCH LEGACY ATTACHMENT';
+      } else {
+        caption.innerText = 'UNTOUCHED AGENCY LEGACY WORKSTATION (ZERO SOURCE CODE CHANGES)';
+      }
     }
 
     async function switchLegacyAgency(agencyKey) {
@@ -1114,7 +1132,7 @@
           document.getElementById('busWrite').className = 'bus-badge pulse-write';
         }
 
-        appendCopilotMessage(data.response, false, 'WATSONX ORCHESTRATE');
+        appendCopilotMessage(data.response, false, 'ASCE DETERMINISTIC ENGINE (DEMO)');
       } catch (err) {
         appendCopilotMessage('Communication error with ASCE Engine: ' + err.message, false, 'ERROR');
       }
@@ -1138,7 +1156,7 @@
 
     function askLegacyArchitecture() {
       setLeftPane('arch');
-      sendCustomMessage('How does this Caseworker Co-Pilot attach to our legacy COBOL and Windows systems without modifying source code?');
+      sendCustomMessage('Explain the exact technology stack used and how IBM Bob was used on this project (including legacy attachment).');
     }
 
     window.addEventListener('DOMContentLoaded', () => {

@@ -1,0 +1,81 @@
+{
+  "agencies": [
+    {
+      "agency_id": "FEMA",
+      "agency_name": "Federal Emergency Management Agency",
+      "enabled": true,
+      "cfr_title": "44",
+      "cfr_parts": [
+        "206"
+      ],
+      "description": "Federal disaster assistance programs",
+      "programs": [
+        "Individual Assistance (IA)",
+        "Public Assistance (PA)",
+        "Hazard Mitigation"
+      ],
+      "config": {
+        "statutory_cliff_months": 18,
+        "appeal_deadline_days": 90,
+        "senior_age_threshold": 65,
+        "senior_priority_policy": "ASCE_INTERNAL_PRIORITY_POLICY"
+      },
+      "rule_windows": [
+        {
+          "rule_id": "FEMA_IA_EQUITY_RULE_2024",
+          "citation": "44 CFR 206.113 / 206.117",
+          "cfr_title": "44",
+          "cfr_part": "206",
+          "published_date": "2024-01-22",
+          "effective_date": "2024-03-22",
+          "applicability_date_field": "incident.declaration_date",
+          "status_note": "Interim final rule 89 FR 3990 had a 60-day waiting window before taking effect on 2024-03-22."
+        }
+      ]
+    },
+    {
+      "agency_id": "VA",
+      "agency_name": "Department of Veterans Affairs",
+      "enabled": true,
+      "cfr_title": "38",
+      "cfr_parts": [
+        "3"
+      ],
+      "description": "Veterans benefits and healthcare",
+      "programs": [
+        "Disability Compensation",
+        "Pension Benefits",
+        "Education Benefits",
+        "Healthcare Eligibility"
+      ],
+      "config": {
+        "evidence_response_years": 1,
+        "evidence_clock_trigger": "incomplete_application_notice_date",
+        "dd214_required": true
+      },
+      "rule_windows": []
+    },
+    {
+      "agency_id": "DUA",
+      "agency_name": "Disaster Unemployment Assistance",
+      "enabled": true,
+      "cfr_title": "20",
+      "cfr_parts": [
+        "625"
+      ],
+      "description": "Unemployment assistance for disaster-affected workers",
+      "programs": [
+        "Disaster Unemployment Assistance (20 CFR Part 625)"
+      ],
+      "config": {
+        "filing_window_days": 30,
+        "proof_window_days": 21,
+        "dap_weeks_after_declaration": 26
+      },
+      "rule_windows": []
+    }
+  ],
+  "default_agency": "FEMA",
+  "multi_agency_support": true,
+  "version": "1.1.0"
+}

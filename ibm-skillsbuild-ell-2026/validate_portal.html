@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCE GovBen v10.0 — Public-Sector Synthetic Benchmark &amp; 1-Page Attestation Portal</title>
+  <style>
+    :root {
+      --navy: #0f2942;
+      --blue: #1d4ed8;
+      --blue-hover: #1e40af;
+      --emerald: #059669;
+      --emerald-hover: #047857;
+      --slate-bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--slate-bg); color: var(--text); line-height: 1.5; }
+    .gov-banner {
+      background: #091828; color: #cbd5e1; font-size: 12px; padding: 7px 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+    .gov-banner a { color: #60a5fa; text-decoration: none; font-weight: 600; }
+    .hero {
+      background: linear-gradient(135deg, #0f2942 0%, #173b61 100%);
+      color: #fff; padding: 28px 24px; border-bottom: 4px solid #2563eb;
+    }
+    .container { max-width: 1120px; margin: 0 auto; }
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .badge {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+      color: #e2e8f0; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.3px;
+    }
+    .badge.green { background: rgba(16,185,129,0.2); border-color: #34d399; color: #a7f3d0; }
+    h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+    .subtitle { color: #cbd5e1; font-size: 14px; max-width: 850px; }
+    .nav-pills { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .nav-btn {
+      display: inline-block; padding: 8px 14px; border-radius: 5px; font-size: 12.5px; font-weight: 700;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.08);
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.18); }
+
+    .main-grid {
+      max-width: 1120px; margin: 22px auto 48px; padding: 0 18px;
+      display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 20px;
+    }
+    @media (max-width: 920px) { .main-grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 22px; box-shadow: 0 2px 8px rgba(15,23,42,0.05);
+    }
+    .step-tag {
+      display: inline-block; background: #dbeafe; color: #1e40af; font-weight: 800;
+      font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; text-transform: uppercase;
+    }
+    .card h2 { font-size: 17px; color: var(--navy); margin-bottom: 6px; }
+    .card p.desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+
+    label { display: block; font-size: 12.5px; font-weight: 700; color: #1e293b; margin-bottom: 5px; margin-top: 11px; }
+    select, input, textarea {
+      width: 100%; padding: 9px 11px; border: 1px solid #94a3b8; border-radius: 5px;
+      font-size: 13.5px; color: #0f172a; background: #fff;
+    }
+    .btn-primary {
+      margin-top: 14px; width: 100%; padding: 12px 16px; border: none; border-radius: 6px;
+      background: var(--blue); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--blue-hover); }
+    .btn-emerald {
+      margin-top: 10px; width: 100%; padding: 12px 16px; border: none; border-radius: 6px;
+      background: var(--emerald); color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer;
+    }
+    .btn-emerald:hover { background: var(--emerald-hover); }
+    .btn-outline {
+      margin-top: 10px; width: 100%; padding: 10px 14px; border: 2px solid var(--navy); border-radius: 6px;
+      background: #f8fafc; color: var(--navy); font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .btn-outline:hover { background: #e2e8f0; }
+
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px;
+    }
+    .metric-box {
+      background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; text-align: center;
+    }
+    .metric-val { font-size: 19px; font-weight: 800; color: var(--navy); }
+    .metric-lbl { font-size: 11px; color: var(--muted); font-weight: 600; }
+
+    .receipt-box {
+      margin-top: 14px; background: #09131f; color: #a7f3d0; font-family: "Courier New", Consolas, monospace;
+      font-size: 11.5px; padding: 13px; border-radius: 6px; border: 1px solid #1e3a5f; overflow-x: auto;
+      white-space: pre-wrap; word-break: break-all;
+    }
+    .disclaimer {
+      margin-top: 12px; font-size: 11.5px; color: #64748b; background: #f8fafc;
+      border-left: 3px solid #64748b; padding: 8px 10px;
+    }
+    .toast {
+      margin-top: 12px; padding: 12px; border-radius: 6px; font-size: 13px; font-weight: 600; display: none;
+    }
+    .toast.ok { display: block; background: #ecfdf5; border: 1px solid #10b981; color: #065f46; }
+    .toast.err { display: block; background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; }
+  </style>
+</head>
+<body>
+
+  <div class="gov-banner">
+    <div><strong>PUBLIC-SECTOR AUDIT READINESS SANDBOX</strong> &nbsp;|&nbsp; $0.00 Cost &bull; Zero Citizen PII &bull; Zero IT Installation</div>
+    <div>ASCE Technologies LLC &bull; CAGE: <strong>26NM9</strong> &bull; UEI: <strong>T5SKKW6K5W55</strong> &bull; D-U-N-S: <strong>14-873-9839</strong> &bull; Local Flask Evaluation Sandbox</div>
+  </div>
+
+  <div class="hero">
+    <div class="container">
+      <div class="badge-row">
+        <span class="badge green">ZERO-COST SYNTHETIC VALIDATION</span>
+        <span class="badge">USPTO APP #64/168,240</span>
+        <span class="badge">OMB M-24-10 HUMAN-IN-THE-LOOP</span>
+      </div>
+      <h1>3-Minute Synthetic Statutory Benchmark &amp; 1-Page Attestation Portal</h1>
+      <p class="subtitle">
+        Execute a live 5,000-packet deterministic statutory compliance run on the isolated local Flask runtime, inspect server-verified SHA-256 benchmark receipts, and download a pre-filled 1-Page Synthetic Benchmark Verification Record ready for official letterhead.
+      </p>
+      <div class="nav-pills">
+        <a class="nav-btn" href="/" target="_blank">⚙️ Open Full Multi-Agency Workstation Preview &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <!-- STEP 1: LIVE 5,000-PACKET BENCHMARK -->
+    <div class="card">
+      <span class="step-tag">Step 1 of 2 &bull; Live Local Synthetic Execution</span>
+      <h2>Run 5,000-Packet Deterministic Statutory Benchmark</h2>
+      <p class="desc">Select your agency's governing regulatory domain and execute 5,000 synthetic benefit/grant packets through the ASCE pre-commit compliance engine on demand.</p>
+
+      <label for="packSelect">Governing Statutory Rule Pack</label>
+      <select id="packSelect">
+        <option value="HUD_24_CFR">Public Housing Authorities — 24 CFR § 982 / § 960 (HCV &amp; Annual Recertification)</option>
+        <option value="FEMA_44_CFR">Emergency Management — 44 CFR Part 206 (Appeals, Occupancy &amp; Integrity Controls)</option>
+        <option value="LIHEAP_SNAP">Community Action &amp; Human Services — SNAP 7 CFR § 273.12 (SAR-7 &amp; Income Controls)</option>
+        <option value="MEDICAID_42_CFR">Health &amp; Medicaid — 42 CFR § 435.916 Ex-Parte Redetermination</option>
+      </select>
+
+      <button class="btn-primary" id="runBtn" onclick="runLiveBenchmark()">▶ Execute Live 5,000-Packet Synthetic Benchmark</button>
+
+      <div id="benchResult" style="display:none;">
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="metric-val" id="mPackets">5,000</div>
+            <div class="metric-lbl">Synthetic Packets Audited</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mLatency">--</div>
+            <div class="metric-lbl">Total Wall-Clock Time</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mFlagged">--</div>
+            <div class="metric-lbl">Pre-Commit Defects Caught</div>
+          </div>
+        </div>
+
+        <div class="receipt-box" id="receiptOutput"></div>
+      </div>
+    </div>
+
+    <!-- STEP 2: 1-PAGE LETTERHEAD ATTESTATION GENERATOR -->
+    <div class="card">
+      <span class="step-tag">Step 2 of 2 &bull; Factual 1-Page Benchmark Attestation</span>
+      <h2>Generate Pre-Filled 1-Page Letterhead Sign-Off</h2>
+      <p class="desc">Once you have observed the synthetic benchmark, generate a pre-filled 1-Page Word (.docx) template to place on your letterhead—or record a direct electronic benchmark attestation.</p>
+
+      <label for="orgName">Agency / Housing Authority / Institute Name *</label>
+      <input type="text" id="orgName" placeholder="e.g., Marietta Housing Authority / Augusta EMA" />
+
+      <label for="revName">Authorized Reviewer Name &amp; Official Title *</label>
+      <input type="text" id="revName" placeholder="e.g., Jane Doe, Executive Director" />
+
+      <label for="revEmail">Official Work Email &amp; Phone *</label>
+      <input type="text" id="revEmail" placeholder="e.g., jdoe@agency.gov | (404) 555-0100" />
+
+      <label for="revNotes">Optional Observation Notes</label>
+      <input type="text" id="revNotes" placeholder="Optional notes or preferred 15-min walkthrough time" />
+
+      <button class="btn-emerald" onclick="downloadPrefilledDocx()">⬇ Download Pre-Filled 1-Page Letterhead Word (.DOCX)</button>
+      <button class="btn-outline" onclick="submitElectronicAttestation()">✓ Submit Electronic Benchmark Sign-Off &amp; Notify ASCE</button>
+
+      <div id="submitToast" class="toast"></div>
+
+      <div class="disclaimer">
+        <strong>Non-Procurement &amp; Non-Endorsement Safeguard:</strong> This factual attestation records observations from a $0.00-cost, zero-PII synthetic benchmark review only. It creates zero financial obligation, zero procurement commitment, and no exclusive commercial endorsement. Signed letterhead PDFs may also be emailed directly to <strong>t.bullitt@ascetech.org</strong>.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let latestBenchmark = null;
+
+    async function runLiveBenchmark() {
+      const btn = document.getElementById('runBtn');
+      const pack = document.getElementById('packSelect').value;
+      btn.disabled = true;
+      btn.textContent = 'Running 5,000 Synthetic Cases...';
+      try {
+        const res = await fetch('/api/validate/benchmark', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({pack: pack})
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || ('HTTP ' + res.status));
+        }
+        latestBenchmark = data;
+        document.getElementById('benchResult').style.display = 'block';
+        document.getElementById('mPackets').textContent = data.packets_evaluated.toLocaleString();
+        document.getElementById('mLatency').textContent = data.total_seconds + 's (' + data.per_packet_ms + ' ms/case)';
+        document.getElementById('mFlagged').textContent = data.exceptions_intercepted.toLocaleString();
+        document.getElementById('receiptOutput').textContent =
+          'SERVER-VERIFIED SYNTHETIC BENCHMARK RECEIPT\n' +
+          '------------------------------------------------------------\n' +
+          'Reference ID     : ' + data.reference_id + '\n' +
+          'Timestamp (UTC)  : ' + data.timestamp_utc + '\n' +
+          'Rule Pack Ver    : ' + data.rule_pack_version + '\n' +
+          'Statutory Pack   : ' + data.pack_label + '\n' +
+          'Throughput       : ' + data.throughput_per_sec.toLocaleString() + ' packets/sec (Deterministic)\n' +
+          'Schema Failures  : ' + data.schema_failures + '\n' +
+          'Sample Intercept : ' + data.sample_flag + '\n' +
+          'Mainframe Check  : ' + data.cobol_line + '\n' +
+          'SHA-256 Receipt  : ' + data.sha256_receipt;
+      } catch (e) {
+        alert('Benchmark execution error: ' + e);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '▶ Re-Run Live 5,000-Packet Synthetic Benchmark';
+      }
+    }
+
+    async function downloadPrefilledDocx() {
+      const org = document.getElementById('orgName').value.trim();
+      const rev = document.getElementById('revName').value.trim();
+      const email = document.getElementById('revEmail').value.trim();
+      const notes = document.getElementById('revNotes').value.trim();
+      const pack = document.getElementById('packSelect').value;
+      const t = document.getElementById('submitToast');
+      if (!latestBenchmark || latestBenchmark.pack_key !== pack) {
+        await runLiveBenchmark();
+      }
+      const res = await fetch('/api/validate/docx', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          pack: pack,
+          organization: org || '[Agency / Authority / Institute Name]',
+          reviewer: rev || '[Printed Name & Official Title]',
+          contact: email || '[Official Email & Phone]',
+          notes: notes,
+          benchmark: latestBenchmark
+        })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        t.className = 'toast err';
+        t.textContent = 'Could not generate Word verification record (' + (err.error || ('HTTP ' + res.status)) + '). Re-run the benchmark and try again.';
+        return;
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ASCE_Synthetic_Benchmark_Verification.docx';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      t.className = 'toast ok';
+      t.innerHTML = '✓ Pre-filled 1-Page Word (.docx) downloaded! Paste onto official letterhead, sign, and email to <strong>t.bullitt@ascetech.org</strong>.';
+    }
+
+    async function submitElectronicAttestation() {
+      const org = document.getElementById('orgName').value.trim();
+      const rev = document.getElementById('revName').value.trim();
+      const email = document.getElementById('revEmail').value.trim();
+      const notes = document.getElementById('revNotes').value.trim();
+      const pack = document.getElementById('packSelect').value;
+      const t = document.getElementById('submitToast');
+      if (!org || !rev || !email) {
+        alert('Please enter your Organization, Name & Title, and Official Email/Phone to submit an electronic attestation.');
+        return;
+      }
+      if (!latestBenchmark || latestBenchmark.pack_key !== pack) {
+        await runLiveBenchmark();
+      }
+      const res = await fetch('/api/validate/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          pack: pack,
+          organization: org,
+          reviewer: rev,
+          contact: email,
+          notes: notes,
+          benchmark: latestBenchmark
+        })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        t.className = 'toast err';
+        t.textContent = 'Attestation request failed (' + (data.error || ('HTTP ' + res.status)) + ').';
+        return;
+      }
+      t.className = 'toast ok';
+      t.textContent = '✓ Request acknowledged (' + (data.status || 'accepted_without_persistence') + '): ' + (data.message || 'This demonstration server does not persist attestation payloads.') + ' Download the 1-Page Word (.docx) copy above and email a signed copy to t.bullitt@ascetech.org.';
+    }
+
+    // Auto-run initial benchmark on load so visitors immediately see real metrics!
+    window.addEventListener('DOMContentLoaded', () => { runLiveBenchmark(); });
+  </script>
+</body>
+</html>

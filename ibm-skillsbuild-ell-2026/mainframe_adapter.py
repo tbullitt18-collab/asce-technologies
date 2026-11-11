@@ -20,7 +20,7 @@ Compliance: Maintains cryptographic evidence chain while translating formats
 import json
 import struct
 from typing import Dict, Any, List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 import hashlib
 
@@ -68,21 +68,21 @@ class COBOLCopybookGenerator:
                 {"name": "DEFECT-COUNT", "type": "numeric", "length": 2, "position": 44},
                 {"name": "ESCALATION-FLAG", "type": "boolean", "length": 1, "position": 46},
                 {"name": "EVIDENCE-HASH", "type": "alphanumeric", "length": 32, "position": 47},
-                {"name": "FILLER", "type": "alphanumeric", "length": 1, "position": 79}
+                {"name": "FILLER", "type": "alphanumeric", "length": 2, "position": 79}
             ],
             "DEFECT_DETAIL": [
                 {"name": "CASE-ID", "type": "alphanumeric", "length": 20, "position": 1},
-                {"name": "DEFECT-CODE", "type": "alphanumeric", "length": 30, "position": 21},
-                {"name": "DEFECT-SEVERITY", "type": "alphanumeric", "length": 10, "position": 51},
-                {"name": "DEFECT-MESSAGE", "type": "alphanumeric", "length": 28, "position": 61},
-                {"name": "FILLER", "type": "alphanumeric", "length": 1, "position": 89}
+                {"name": "DEFECT-CODE", "type": "alphanumeric", "length": 20, "position": 21},
+                {"name": "DEFECT-SEVERITY", "type": "alphanumeric", "length": 10, "position": 41},
+                {"name": "DEFECT-MESSAGE", "type": "alphanumeric", "length": 28, "position": 51},
+                {"name": "FILLER", "type": "alphanumeric", "length": 2, "position": 79}
             ],
             "EVIDENCE_RECORD": [
                 {"name": "CASE-ID", "type": "alphanumeric", "length": 20, "position": 1},
-                {"name": "DOCUMENT-TYPE", "type": "alphanumeric", "length": 20, "position": 21},
-                {"name": "DOCUMENT-HASH", "type": "alphanumeric", "length": 32, "position": 41},
-                {"name": "UPLOAD-DATE", "type": "date", "length": 10, "position": 73},
-                {"name": "FILLER", "type": "alphanumeric", "length": 7, "position": 83}
+                {"name": "DOCUMENT-TYPE", "type": "alphanumeric", "length": 16, "position": 21},
+                {"name": "DOCUMENT-HASH", "type": "alphanumeric", "length": 32, "position": 37},
+                {"name": "UPLOAD-DATE", "type": "date", "length": 10, "position": 69},
+                {"name": "FILLER", "type": "alphanumeric", "length": 2, "position": 79}
             ]
         }
     
@@ -104,7 +104,7 @@ class COBOLCopybookGenerator:
         
         # COBOL copybook header
         copybook.append(f"      * ASCE {record_type} COPYBOOK")
-        copybook.append(f"      * Generated: {datetime.utcnow().isoformat()}")
+        copybook.append(f"      * Generated: {datetime.now(timezone.utc).isoformat()}")
         copybook.append(f"       01  {record_type}-RECORD.")
         
         # Generate field definitions
@@ -146,7 +146,7 @@ class COBOLCopybookGenerator:
             raise ValueError(f"Unknown record type: {record_type}")
         
         layout = self.record_layouts[record_type]
-        record = [" "] * 90  # 90-char buffer (80 + padding)
+        record = [" "] * 80  # 80-column fixed-width buffer
         
         for field in layout:
             name = field["name"]
@@ -177,9 +177,37 @@ class COBOLCopybookGenerator:
         
         return "".join(record[:80])  # Return exactly 80 chars
     
+    def to_ebcdic(self, text: str, codepage: str = "cp037") -> bytes:
+        """
+        Convert ASCII/UTF-8 text to EBCDIC encoding.
+        
+        Args:
+            text: ASCII/UTF-8 text string
+            codepage: EBCDIC codepage (default: cp037 for US English)
+            
+        Returns:
+            EBCDIC-encoded bytes
+        """
+        return text.encode(codepage)
+    
+    def from_ebcdic(self, ebcdic_bytes: bytes, codepage: str = "cp037") -> str:
+        """
+        Convert EBCDIC bytes to ASCII/UTF-8 text.
+        
+        Args:
+            ebcdic_bytes: EBCDIC-encoded bytes
+            codepage: EBCDIC codepage (default: cp037 for US English)
+            
+        Returns:
+            ASCII/UTF-8 text string
+        """
+        return ebcdic_bytes.decode(codepage)
+    
     def generate_batch_file(self, records: List[Dict[str, Any]], 
                            record_type: str, 
-                           output_path: str) -> Dict[str, Any]:
+                           output_path: str,
+                           use_ebcdic: bool = False,
+                           codepage: str = "cp037") -> Dict[str, Any]:
         """
         Generate mainframe batch staging file.
         
@@ -187,6 +215,8 @@ class COBOLCopybookGenerator:
             records: List of JSON records
             record_type: Type of record layout
             output_path: Path to output file
+            use_ebcdic: Whether to encode output in EBCDIC (default: False for ASCII)
+            codepage: EBCDIC codepage if use_ebcdic=True (default: cp037)
             
         Returns:
             Metadata about generated file
@@ -199,20 +229,31 @@ class COBOLCopybookGenerator:
         
         # Write to file
         content = "\n".join(lines)
-        with open(output_path, "w", encoding="ascii") as f:
-            f.write(content)
         
-        # Generate metadata
-        file_hash = hashlib.sha256(content.encode("ascii")).hexdigest()
+        if use_ebcdic:
+            # Write as EBCDIC binary
+            ebcdic_content = self.to_ebcdic(content, codepage)
+            with open(output_path, "wb") as f:
+                f.write(ebcdic_content)
+            file_hash = hashlib.sha256(ebcdic_content).hexdigest()
+            file_size = len(ebcdic_content)
+            format_str = f"COBOL_FIXED_WIDTH_80_COLUMN_EBCDIC_{codepage.upper()}"
+        else:
+            # Write as ASCII text
+            with open(output_path, "w", encoding="ascii") as f:
+                f.write(content)
+            file_hash = hashlib.sha256(content.encode("ascii")).hexdigest()
+            file_size = len(content)
+            format_str = "COBOL_FIXED_WIDTH_80_COLUMN_ASCII"
         
         return {
             "file_path": output_path,
             "record_type": record_type,
             "record_count": len(records),
-            "file_size_bytes": len(content),
+            "file_size_bytes": file_size,
             "file_hash": file_hash,
-            "generated_at": datetime.utcnow().isoformat(),
-            "format": "COBOL_FIXED_WIDTH_80_COLUMN"
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "format": format_str
         }
 
 
@@ -262,12 +303,12 @@ class IBMMQAdapter:
         Connect to IBM MQ queue manager.
         
         Returns:
-            True if connected successfully
+            True if connected successfully, False if pymqi not available
         """
         if not self.pymqi_available:
-            # Mock connection for testing
-            self.connected = True
-            return True
+            # Cannot connect without pymqi library
+            self.connected = False
+            return False
         
         try:
             # Real IBM MQ connection
@@ -299,7 +340,8 @@ class IBMMQAdapter:
             return {
                 "success": False,
                 "error": "Not connected to MQ",
-                "message_id": message_id
+                "message_id": message_id,
+                "simulated": True
             }
         
         try:
@@ -310,20 +352,26 @@ class IBMMQAdapter:
                     md.MsgId = message_id.encode()
                 
                 self.queue.put(message.encode("ascii"), md)
+                simulated = False
+            else:
+                # Simulated send (no pymqi library)
+                simulated = True
             
             # Return success metadata
             return {
                 "success": True,
                 "message_id": message_id or hashlib.md5(message.encode()).hexdigest()[:16],
                 "queue_name": self.queue_name,
-                "timestamp": datetime.utcnow().isoformat(),
-                "message_size": len(message)
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "message_size": len(message),
+                "simulated": simulated
             }
         except Exception as e:
             return {
                 "success": False,
                 "error": str(e),
-                "message_id": message_id
+                "message_id": message_id,
+                "simulated": True
             }
     
     def disconnect(self):
@@ -381,7 +429,7 @@ class MainframeAdapter:
         
         # Extract key fields for COBOL record
         case_id = audit_result.get("case_id", "UNKNOWN")
-        audit_date = datetime.utcnow().strftime("%Y-%m-%d")
+        audit_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         status = audit_result.get("status", "UNKNOWN")
         risk_score = audit_result.get("risk_score", 0)
         defects = audit_result.get("defects", [])
@@ -460,7 +508,7 @@ class MainframeAdapter:
         elif method == "batch":
             # Generate batch staging file
             case_id = audit_result.get("case_id", "UNKNOWN")
-            timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
             output_path = f"mainframe_staging_{case_id}_{timestamp}.txt"
             
             # Write audit record
