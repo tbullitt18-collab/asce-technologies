@@ -8,13 +8,13 @@
 
 ---
 
-## 1. Live Endpoints & Master Showcase Video (`4m 22.8s` • `1080p H.264` • `17,396,579 B`)
+## 1. Live Endpoints & Master Showcase Video (`2m 54.9s` • `1080p H.264` • `17,265,736 B`)
 
 - **Live Gateway (IBM Cloud Code Engine):** `https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/`
 - **Interactive Co-Pilot & Tech Stack (`/copilot`):** `https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/copilot`
 - **Synthetic Validation Portal (`/validate`):** `https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/validate` and `https://ascetech.org/validate`
 - **Live Cloud Video Stream:** `https://asce-gateway.2fkm9wojoieo.us-south.codeengine.appdomain.cloud/static/ASCE_3Min_Demo_Video.mp4`
-- **GitHub Direct Video Stream:** [`ASCE_3Min_Demo_Video.mp4`](./ASCE_3Min_Demo_Video.mp4) (`17,396,579` bytes / `16.59 MB`)
+- **GitHub Direct Video Stream:** [`ASCE_3Min_Demo_Video.mp4`](./ASCE_3Min_Demo_Video.mp4) (`17,265,736` bytes / `16.47 MB`)
 
 ---
 
@@ -52,7 +52,7 @@ ASCE operates as a **deterministic pre-commit compliance gate** anchored by fail
 
 ## 4. Core Deliverables in This Folder
 
-- [`ASCE_3Min_Demo_Video.mp4`](./ASCE_3Min_Demo_Video.mp4) & [`demo.html`](./demo.html) — `4m 22.8s` `1080p` `H.264` walkthrough & HTML5 player
+- [`ASCE_3Min_Demo_Video.mp4`](./ASCE_3Min_Demo_Video.mp4) & [`demo.html`](./demo.html) — `2m 54.9s` `1080p` `H.264` walkthrough & HTML5 player
 - [`app.py`](./app.py), [`compliance_engine.py`](./compliance_engine.py), [`mainframe_adapter.py`](./mainframe_adapter.py), [`validation_routes.py`](./validation_routes.py), [`surge_api.py`](./surge_api.py) — Wave 2 Flask gateway, statutory rule engine, EBCDIC copybook generator, & batch/portal APIs (`asce_core.py` retained as historical v2 prototype reference)
 - [`bob_conversational_demo.py`](./bob_conversational_demo.py), [`bob_chat.html`](./bob_chat.html), [`bob-mcp-config.json`](./bob-mcp-config.json), [`bob_sessions/`](./bob_sessions/BOB_WAVE2_SESSION_REPORT.md) — Bounded Co-Pilot & IBM Bob MCP/session records
 - [`ASCE_IBM_SkillsBuild_Showcase_Presentation.pptx`](./ASCE_IBM_SkillsBuild_Showcase_Presentation.pptx) — Showcase Pitch Deck (Wave 2 updated)
